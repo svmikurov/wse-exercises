@@ -1,2 +1,14 @@
+# Virtual environment
 .venv_wse_exercises/
+
+# Byte-compiled / optimized files
 __pycache__/
+
+# IntelliJ Idea family of suites
+.idea/
+
+# Lybrary logs
+logs/
+
+# Secret files
+.env
