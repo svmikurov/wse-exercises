@@ -3,6 +3,7 @@
 
 # Byte-compiled / optimized files
 __pycache__/
+dist/
 
 # IntelliJ Idea family of suites
 .idea/
