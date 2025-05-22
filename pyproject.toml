@@ -10,36 +10,28 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.10"
-
+pydantic = "^2.11.4"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.15.0"
 ruff = "^0.11.9"
+pytest-cov = "^6.1.1"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-# Ruff linter
+
 [tool.ruff]
 # https://docs.astral.sh/ruff/configuration/
 exclude = [
     ".github/*",
     ".idea/*",
     ".venv*",
-    "docs",
+    "docs/*",
     "*/conftest.py",
 ]
 line-length = 79
-
-[tool.ruff.lint.per-file-ignores]
-"*/interfaces/*.py" = [
-    "D101",     # undocumented public class definitions
-    "D102",     # undocumented public method definitions
-    "D204",     # class methods are not separated from the class's docstring
-    "E301",     # missing blank lines between methods of a class
-    "E302"      # missing blank lines between top level functions and classes
-]
 
 [tool.ruff.lint]
 select = [
@@ -61,11 +53,24 @@ ignore = [
     "D416",     # Section name should end with a colon
 ]
 
+[tool.ruff.lint.per-file-ignores]
+"*/interfaces/*.py" = [
+    "D101",     # undocumented public class definitions
+    "D102",     # undocumented public method definitions
+    "D107",     # public `__init__` method definitions are missing
+    "D204",     # class methods are not separated from the class's docstring
+    "E301",     # missing blank lines between methods of a class
+    "E302"      # missing blank lines between top level functions and classes
+]
+
+[tool.ruff.lint.pycodestyle]
+max-doc-length = 72
+
 [tool.ruff.lint.flake8-quotes]
 inline-quotes = "single"
 
 [tool.ruff.format]
 quote-style = "single"
 
-[tool.ruff.lint.pycodestyle]
-max-doc-length = 72
+[tool.pytest.ini_options]
+addopts = "--doctest-modules"
