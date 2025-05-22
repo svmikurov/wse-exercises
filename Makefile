@@ -5,6 +5,9 @@ format:
 	ruff check --fix && ruff format
 
 mypy:
-	mypy .
+	mypy --strict .
 
-check: format ruff mypy
+test:
+	pytest
+
+check: format ruff mypy test
