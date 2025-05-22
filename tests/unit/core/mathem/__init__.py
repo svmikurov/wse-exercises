@@ -1,0 +1,1 @@
+"""Test Mathematical exercises package."""
