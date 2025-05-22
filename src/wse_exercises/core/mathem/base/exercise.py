@@ -1,20 +1,22 @@
-"""Defines the base logic for creation a simple math exercise."""
+"""Defines the base logic for creation a math exercises."""
 
 import logging
-from abc import ABC
-from typing import Type
+from typing import Any, ClassVar, Type
 
-from wse_exercises.core.mathem.base.task import SimpleMathTask
+from pydantic import BaseModel, ValidationError
+
+from wse_exercises.core.mathem.base.services import OperandGenerator
+from wse_exercises.core.mathem.enums import Exercises
 from wse_exercises.core.mathem.exceptions import OperandGeneratorError
-from wse_exercises.core.mathem.interfaces import (
-    IOperandGenerator,
-    ISimpleMathAnswer,
-    ISimpleMathExercise,
-    ISimpleMathQuestion,
-    ISimpleMathTask,
+from wse_exercises.core.mathem.task import (
+    MathTaskConditions,
+    MathTaskConfig,
+    MathTextTaskAnswer,
+    MathTextTaskQuestion,
+    SimpleMathTask,
 )
-from wse_exercises.core.mathem.interfaces.iconfig import IExerciseConfig
-from wse_exercises.interfaces.iexercises import IExercises
+
+from .task_factory import MathTaskComponentFactory
 
 logger = logging.getLogger(__name__)
 
@@ -22,66 +24,120 @@ MIN_VALUE = 1
 MAX_VALUE = 9
 
 
-class BaseSimpleCalculationExercise(ABC, ISimpleMathExercise):
-    """Defines a base logic of simple calculation exercise creation."""
+class SimpleMathExerciseConfig(BaseModel):
+    """Exercise config Data-Transfer-Object."""
 
-    _exercise_type: IExercises
-    _question_class: Type[ISimpleMathQuestion]
-    _answer_class: Type[ISimpleMathAnswer]
+    min_value: int = MIN_VALUE
+    max_value: int = MAX_VALUE
+
+
+class BaseSimpleCalculationExercise:
+    """Defines a base logic of simple calculation exercise creation.
+
+    Control exercise task creation with:
+    - `task_factory`, create question and answer for exercise type;
+    - `operand_generator`, get random or exact calculation operands;
+    - `config`, set min and max calculation operand value range for
+       random generator or as exact operands.
+    """
+
+    task_factory: ClassVar[Type[MathTaskComponentFactory]]
+    exercise_name: ClassVar[Exercises]
+
     _operand_1: int
     _operand_2: int
 
     def __init__(
         self,
-        operand_generator: IOperandGenerator,
-        config: dict | IExerciseConfig | None = None,
+        operand_generator: OperandGenerator,
+        config: SimpleMathExerciseConfig | dict[str, Any] | None = None,
     ) -> None:
         """Construct the task creation."""
-        if config is not None and not isinstance(
-            config, (dict, IExerciseConfig)
-        ):
-            logger.debug(
-                f'Invalid config type: {type(config).__name__}, using empty.'
+        # Initialize exercise config
+        try:
+            # Automatic conversion of dictionaries
+            # and other types into a model
+            self._exercise_config = (
+                SimpleMathExerciseConfig.model_validate(config)
+                if config is not None
+                else SimpleMathExerciseConfig()
             )
-            config = {}
-        self._exercise_config = config or {}
+        except ValidationError as e:
+            logger.error(f'Invalid exercise config: {e.errors()}')
+            logger.info('Using default configuration')
+            self._exercise_config = SimpleMathExerciseConfig()
 
-        self._min_value = self._get_value('min_value', MIN_VALUE)
-        self._max_value = self._get_value('max_value', MAX_VALUE)
+        # Initialize calculation value range
+        self._min_value = self._exercise_config.min_value
+        self._max_value = self._exercise_config.max_value
+
+        # Set up operand generator
         self._operand_generator = operand_generator
         self._operand_generator.set_values(self._min_value, self._max_value)
 
-    def create_task(self) -> ISimpleMathTask | None:
-        """Create new calculation task data transfer object."""
-        try:
-            self._operand_1 = self._generate_operand()
-            self._operand_2 = self._generate_operand()
-        except OperandGeneratorError as e:
-            logger.exception(str(e))
-            return None
-
-        return SimpleMathTask(
-            min_value=self._min_value,
-            max_value=self._max_value,
-            operand_1=self._operand_1,
-            operand_2=self._operand_2,
-            exercise_type=self._exercise_type,
-            question=self._create_question(),
-            answer=self._create_answer(),
-        )
+    def create_task(self) -> SimpleMathTask:
+        """Create simple calculation task."""
+        self._generate_operands()
+        self._create_components()
+        task_dto = self._create_task_dto()
+        return task_dto
 
     # Utility methods
 
-    def _get_value(self, key: str, default: int) -> int:
-        value = self._exercise_config.get(key)
-        return value if isinstance(value, int) else default
+    def _generate_operands(self) -> None:
+        """Generate task operands."""
+        try:
+            self._operand_1 = self._operand_generator.generate()
+            self._operand_2 = self._operand_generator.generate()
 
-    def _create_question(self) -> ISimpleMathQuestion:
-        return self._question_class(self._operand_1, self._operand_2)
+        except OperandGeneratorError as e:
+            logger.error(
+                'Operand generation failed: %s. '
+                'Using fallback values: min_value=%d, max_value=%d',
+                str(e),
+                self._min_value,
+                self._max_value,
+            )
+            # Fallback to minimal possible values
+            # to keep system operational
+            self._operand_1 = self._min_value
+            self._operand_2 = self._min_value
 
-    def _create_answer(self) -> ISimpleMathAnswer:
-        return self._answer_class(self._operand_1, self._operand_2)
+        except Exception as e:
+            logger.critical(
+                'Unexpected error during operand generation: %s',
+                str(e),
+                exc_info=True,
+            )
+            # Critical fallback to prevent complete failure
+            self._operand_1 = 1
+            self._operand_2 = 1
 
-    def _generate_operand(self) -> int:
-        """Generate random integer within configured range."""
-        return self._operand_generator.generate()
+    def _create_components(self) -> None:
+        """Create simple math task component DTO (question/answer)."""
+        self._question = self.task_factory.create_question(
+            self._operand_1, self._operand_2
+        )
+        self._answer = self.task_factory.create_answer(
+            self._operand_1, self._operand_2
+        )
+
+    def _create_task_dto(self) -> SimpleMathTask:
+        """Create simple math task Data Transfer Object."""
+        return SimpleMathTask(
+            config=MathTaskConfig(
+                min_value=self._min_value,
+                max_value=self._max_value,
+            ),
+            conditions=MathTaskConditions(
+                operand_1=self._operand_1,
+                operand_2=self._operand_2,
+            ),
+            question=MathTextTaskQuestion(
+                text=self._question,
+            ),
+            answer=MathTextTaskAnswer(
+                text=self._answer,
+            ),
+            exercise_name=self.exercise_name,
+        )

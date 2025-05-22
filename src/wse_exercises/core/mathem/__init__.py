@@ -4,13 +4,13 @@ __all__ = [
     'AddingExercise',
     'DivisionExercise',
     'ExactOperandGenerator',
-    'ExerciseConfig',
+    'SimpleMathExerciseConfig',
     'MultiplicationExercise',
     'RandomOperandGenerator',
     'SubtractionExercise',
 ]
 
-from wse_exercises.core.mathem.exercise_config import ExerciseConfig
+from wse_exercises.core.mathem.base.exercise import SimpleMathExerciseConfig
 from wse_exercises.core.mathem.exercises import (
     AddingExercise,
     DivisionExercise,

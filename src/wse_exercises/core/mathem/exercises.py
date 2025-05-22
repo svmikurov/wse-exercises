@@ -1,48 +1,59 @@
-"""Defines mathematical exercises."""
+"""Defines mathematical exercises.
 
-from wse_exercises.core.mathem.base.exercise import (
-    BaseSimpleCalculationExercise,
+>>> from wse_exercises import (
+...     AddingExercise,
+...     ExactOperandGenerator,
+... )
+>>> exercise = AddingExercise(
+...     operand_generator=ExactOperandGenerator(),
+...     config={'min_value': 2, 'max_value': 9},
+... )
+>>> task = exercise.create_task()
+>>> task.question.text
+'2 + 9'
+>>> task.answer.text
+'11'
+"""
+
+from .base.exercise import BaseSimpleCalculationExercise
+from .enums import Exercises
+from .task_factories import (
+    AddingTaskFactory,
+    DivisionTaskFactory,
+    MultiplicationTaskFactory,
+    SubtractionTaskFactory,
 )
-from wse_exercises.core.mathem.calculation_components import (
-    AddAnswer,
-    AddQuestion,
-    DivAnswer,
-    DivQuestion,
-    MulAnswer,
-    MulQuestion,
-    SubAnswer,
-    SubQuestion,
-)
-from wse_exercises.core.mathem.enums import Exercises
 
 
 class AddingExercise(BaseSimpleCalculationExercise):
     """Adding exercise."""
 
-    _exercise_type = Exercises.ADDING
-    _question_class = AddQuestion
-    _answer_class = AddAnswer
+    exercise_name = Exercises.ADDING
+    task_factory = AddingTaskFactory
 
 
 class DivisionExercise(BaseSimpleCalculationExercise):
     """Division exercise."""
 
-    _exercise_type = Exercises.DIVISION
-    _question_class = DivQuestion
-    _answer_class = DivAnswer
+    exercise_name = Exercises.DIVISION
+    task_factory = DivisionTaskFactory
 
 
 class MultiplicationExercise(BaseSimpleCalculationExercise):
     """Multiplication exercise."""
 
-    _exercise_type = Exercises.MULTIPLICATION
-    _question_class = MulQuestion
-    _answer_class = MulAnswer
+    exercise_name = Exercises.MULTIPLICATION
+    task_factory = MultiplicationTaskFactory
 
 
 class SubtractionExercise(BaseSimpleCalculationExercise):
     """Subtraction exercise."""
 
-    _exercise_type = Exercises.SUBTRACTION
-    _question_class = SubQuestion
-    _answer_class = SubAnswer
+    exercise_name = Exercises.SUBTRACTION
+    task_factory = SubtractionTaskFactory
+
+
+if __name__ == '__main__':
+    import doctest
+
+    doctest.testmod()
