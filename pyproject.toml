@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "wse-exercises"
-version = "0.1.0"
+version = "0.1.1"
 description = "Exercises for WSE applications"
 authors = ["Sergei Mikurov <454004@mail.ru>"]
 readme = "README.md"
