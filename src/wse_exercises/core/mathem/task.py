@@ -2,10 +2,10 @@
 
 from pydantic import BaseModel, model_validator
 
-from wse_exercises.base.task import Task
+from wse_exercises.base.task import Task, TaskConfig
 
 
-class MathTaskConfig(BaseModel):
+class MathTaskConfig(TaskConfig):
     """Math task config."""
 
     min_value: int
@@ -46,4 +46,13 @@ class SimpleMathTask(
         MathTextTaskAnswer,
     ]
 ):
-    """Base simple math task with text question/answer."""
+    """Base simple math task with text question/answer.
+
+    :param config: Contains the min and max values of the operands.
+    :param conditions: Contain the first and second operand values.
+    :param question: The text representation of question.
+    :param answer: The text representation of answer.
+    :param exercise_name: Exercise name.
+    :param created: The data and time of task creation.
+    :param error_msg: The task creation error message.
+    """
