@@ -3,8 +3,12 @@
 import logging
 from typing import Any, ClassVar, Type
 
-from pydantic import BaseModel, ValidationError
+from pydantic import ConfigDict, ValidationError
 
+from wse_exercises.base.exercise import (
+    ExerciseConfig,
+    TaskRequest,
+)
 from wse_exercises.core.mathem.base.services import OperandGenerator
 from wse_exercises.core.mathem.enums import Exercises
 from wse_exercises.core.mathem.exceptions import OperandGeneratorError
@@ -24,11 +28,21 @@ MIN_VALUE = 1
 MAX_VALUE = 9
 
 
-class SimpleMathExerciseConfig(BaseModel):
+class SimpleMathExerciseConfig(ExerciseConfig):
     """Exercise config Data-Transfer-Object."""
 
     min_value: int = MIN_VALUE
     max_value: int = MAX_VALUE
+
+    model_config = ConfigDict(
+        arbitrary_types_allowed=True,
+    )
+
+
+class SimpleMathTaskRequest(TaskRequest):
+    """Request a simple math exercise with a given configuration."""
+
+    config: SimpleMathExerciseConfig
 
 
 class BaseSimpleCalculationExercise:
@@ -44,9 +58,6 @@ class BaseSimpleCalculationExercise:
     task_factory: ClassVar[Type[MathTaskComponentFactory]]
     exercise_name: ClassVar[Exercises]
 
-    _operand_1: int
-    _operand_2: int
-
     def __init__(
         self,
         operand_generator: OperandGenerator,
@@ -57,7 +68,7 @@ class BaseSimpleCalculationExercise:
         try:
             # Automatic conversion of dictionaries
             # and other types into a model
-            self._exercise_config = (
+            self._config = (
                 SimpleMathExerciseConfig.model_validate(config)
                 if config is not None
                 else SimpleMathExerciseConfig()
@@ -65,18 +76,17 @@ class BaseSimpleCalculationExercise:
         except ValidationError as e:
             logger.error(f'Invalid exercise config: {e.errors()}')
             logger.info('Using default configuration')
-            self._exercise_config = SimpleMathExerciseConfig()
-
-        # Initialize calculation value range
-        self._min_value = self._exercise_config.min_value
-        self._max_value = self._exercise_config.max_value
+            self._config = SimpleMathExerciseConfig()
 
         # Set up operand generator
         self._operand_generator = operand_generator
-        self._operand_generator.set_values(self._min_value, self._max_value)
 
-    def create_task(self) -> SimpleMathTask:
+    def create_task(
+        self,
+        config: SimpleMathExerciseConfig | dict[str, Any] | None = None,
+    ) -> SimpleMathTask:
         """Create simple calculation task."""
+        self._set_configuration(config)
         self._generate_operands()
         self._create_components()
         task_dto = self._create_task_dto()
@@ -84,12 +94,30 @@ class BaseSimpleCalculationExercise:
 
     # Utility methods
 
+    def _set_configuration(
+        self,
+        config: SimpleMathExerciseConfig | dict[str, Any] | None,
+    ) -> None:
+        """Update exercise configuration with validation."""
+        if config is not None:
+            try:
+                # Validate and convert to SimpleMathExerciseConfig.
+                self._config = SimpleMathExerciseConfig.model_validate(config)
+            except ValidationError as e:
+                logger.error(f'Invalid configuration update: {e.errors()}')
+        # If config is None, keep existing configuration.
+        self._init_value_range()
+
+    def _init_value_range(self) -> None:
+        self._min_value = self._config.min_value
+        self._max_value = self._config.max_value
+
     def _generate_operands(self) -> None:
         """Generate task operands."""
+        self._operand_generator.set_values(**self._config.model_dump())
         try:
             self._operand_1 = self._operand_generator.generate()
             self._operand_2 = self._operand_generator.generate()
-
         except OperandGeneratorError as e:
             logger.error(
                 'Operand generation failed: %s. '

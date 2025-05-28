@@ -8,10 +8,22 @@ class MathTaskComponentFactory(ABC):
 
     @classmethod
     @abstractmethod
-    def create_question(cls, operand_1: int, operand_2: int) -> str:
-        """Create a question to a simple math task."""
+    def create_question(cls, op1: int, op2: int) -> str:
+        """Create a question to a simple math task.
+
+        :param int op1: First calculation operand
+        :param int op2: Second calculation operand
+        :return: Text representation of task
+        :rtype: str
+        """
 
     @classmethod
     @abstractmethod
-    def create_answer(cls, operand_1: int, operand_2: int) -> str:
-        """Create an answer to a simple math task."""
+    def create_answer(cls, op1: int, op2: int) -> str:
+        """Create an answer to a simple math task.
+
+        :param int op1: First calculation operand
+        :param int op2: Second calculation operand
+        :return: Text representation of answer
+        :rtype: str
+        """
