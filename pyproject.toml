@@ -7,6 +7,7 @@ readme = "README.md"
 packages = [
     { include = "wse_exercises", from = "src" }
 ]
+include = ["wse_exercises/py.typed"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
