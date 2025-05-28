@@ -1,31 +1,23 @@
 """Defines base class for task."""
 
 from datetime import datetime
-from typing import Generic, TypeVar
+from typing import Generic
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from wse_exercises.core.mathem.enums import Exercises
 
-AnswerT = TypeVar('AnswerT')
-QuestionT = TypeVar('QuestionT')
-TaskConfigT = TypeVar('TaskConfigT')
-TaskConditionsT = TypeVar('TaskConditionsT')
+from .interface import AnswerT, QuestionT, TaskConditionsT, TaskConfigT
 
 
-class TaskT(Generic[TaskConfigT, TaskConditionsT, QuestionT, AnswerT]):
-    """Abstraction base task class."""
-
-    config: TaskConfigT
-    conditions: TaskConditionsT
-    question: QuestionT
-    answer: AnswerT
-    exercise_name: Exercises
-    error_msg: str
-    created: datetime
+class TaskConfig(BaseModel):
+    """Task base config."""
 
 
-class Task(BaseModel, TaskT[TaskConfigT, TaskConditionsT, QuestionT, AnswerT]):
+class Task(
+    BaseModel,
+    Generic[TaskConfigT, TaskConditionsT, QuestionT, AnswerT],
+):
     """Base class for DTO exercise task."""
 
     config: TaskConfigT
@@ -34,4 +26,8 @@ class Task(BaseModel, TaskT[TaskConfigT, TaskConditionsT, QuestionT, AnswerT]):
     answer: AnswerT
     exercise_name: Exercises
     created: datetime = Field(default_factory=datetime.now)
-    error_msg: str = ''
+    error_msg: str = Field(default='', frozen=True)
+
+    model_config = ConfigDict(
+        frozen=True,
+    )
