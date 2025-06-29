@@ -3,7 +3,7 @@
 from datetime import datetime
 from typing import Generic
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from wse_exercises.core.mathem.enums import Exercises
 
@@ -26,4 +26,8 @@ class Task(
     answer: AnswerT
     exercise_name: Exercises
     created: datetime = Field(default_factory=datetime.now)
-    error_msg: str = ''
+    error_msg: str = Field(default='', frozen=True)
+
+    model_config = ConfigDict(
+        frozen=True,
+    )
