@@ -1,38 +1,45 @@
 """Defines the math task Data Transfer Objects."""
 
-from pydantic import BaseModel, model_validator
+from dataclasses import dataclass
 
-from wse_exercises.base.task import Task, TaskConfig
+from wse_exercises.base.task import Task
 
 
-class MathTaskConfig(TaskConfig):
+@dataclass
+class MathTaskConfig:
     """Math task config."""
 
     min_value: int
     max_value: int
 
-    @model_validator(mode='after')
-    def check_min_leq_max(self) -> 'MathTaskConfig':
+    def __post_init__(self) -> None:
+        """Validate after object initialization."""
+        self._check_min_leq_max()
+
+    def _check_min_leq_max(self) -> 'MathTaskConfig':
         """Check that the minimum value is greater than the maximum."""
         if self.min_value > self.max_value:
             raise ValueError('The minimum value is greater than the maximum')
         return self
 
 
-class MathTaskConditions(BaseModel):
+@dataclass(frozen=True)
+class MathTaskConditions:
     """Math task conditions."""
 
     operand_1: int
     operand_2: int
 
 
-class MathTextTaskQuestion(BaseModel):
+@dataclass(frozen=True)
+class MathTextTaskQuestion:
     """Math text task question."""
 
     text: str
 
 
-class MathTextTaskAnswer(BaseModel):
+@dataclass(frozen=True)
+class MathTextTaskAnswer:
     """Math text task answer."""
 
     text: str

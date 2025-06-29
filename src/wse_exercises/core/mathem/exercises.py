@@ -4,6 +4,8 @@
 ...     AddingExercise,
 ...     ExactOperandGenerator,
 ... )
+>>> from wse_exercises import SimpleMathExerciseConfig
+>>> config = SimpleMathExerciseConfig(min_value=2, max_value=9)
 >>> exercise = AddingExercise(
 ...     operand_generator=ExactOperandGenerator(),
 ...     config={'min_value': 2, 'max_value': 9},
@@ -18,10 +20,10 @@
 from .base.exercise import BaseSimpleCalculationExercise
 from .enums import Exercises
 from .task_factories import (
-    AddingTaskFactory,
-    DivisionTaskFactory,
-    MultiplicationTaskFactory,
-    SubtractionTaskFactory,
+    AddingTaskFactoryBase,
+    DivisionTaskFactoryBase,
+    MultiplicationTaskFactoryBase,
+    SubtractionTaskFactoryBase,
 )
 
 
@@ -29,28 +31,28 @@ class AddingExercise(BaseSimpleCalculationExercise):
     """Adding exercise."""
 
     exercise_name = Exercises.ADDING
-    task_factory = AddingTaskFactory
+    task_factory = AddingTaskFactoryBase
 
 
 class DivisionExercise(BaseSimpleCalculationExercise):
     """Division exercise."""
 
     exercise_name = Exercises.DIVISION
-    task_factory = DivisionTaskFactory
+    task_factory = DivisionTaskFactoryBase
 
 
 class MultiplicationExercise(BaseSimpleCalculationExercise):
     """Multiplication exercise."""
 
     exercise_name = Exercises.MULTIPLICATION
-    task_factory = MultiplicationTaskFactory
+    task_factory = MultiplicationTaskFactoryBase
 
 
 class SubtractionExercise(BaseSimpleCalculationExercise):
     """Subtraction exercise."""
 
     exercise_name = Exercises.SUBTRACTION
-    task_factory = SubtractionTaskFactory
+    task_factory = SubtractionTaskFactoryBase
 
 
 if __name__ == '__main__':

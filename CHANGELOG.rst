@@ -1,3 +1,9 @@
+0.2.0 (30-06-2025)
+==================
+
+- Removed `pydantic` dependency.
+- Removed the ability to serialize/deserialize DTO.
+
 0.1.2 (29-05-2025)
 ==================
 
