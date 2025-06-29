@@ -1,9 +1,8 @@
 """Defines the base logic for creation a math exercises."""
 
 import logging
+from dataclasses import dataclass
 from typing import Any, ClassVar, Type
-
-from pydantic import ConfigDict, ValidationError
 
 from wse_exercises.base.exercise import (
     ExerciseConfig,
@@ -20,7 +19,7 @@ from wse_exercises.core.mathem.task import (
     SimpleMathTask,
 )
 
-from .task_factory import MathTaskComponentFactory
+from .task_factory import BaseMathTaskComponentFactory
 
 logger = logging.getLogger(__name__)
 
@@ -28,17 +27,15 @@ MIN_VALUE = 1
 MAX_VALUE = 9
 
 
+@dataclass
 class SimpleMathExerciseConfig(ExerciseConfig):
     """Exercise config Data-Transfer-Object."""
 
     min_value: int = MIN_VALUE
     max_value: int = MAX_VALUE
 
-    model_config = ConfigDict(
-        arbitrary_types_allowed=True,
-    )
 
-
+@dataclass
 class SimpleMathTaskRequest(TaskRequest):
     """Request a simple math exercise with a given configuration."""
 
@@ -55,8 +52,8 @@ class BaseSimpleCalculationExercise:
        random generator or as exact operands.
     """
 
-    task_factory: ClassVar[Type[MathTaskComponentFactory]]
     exercise_name: ClassVar[Exercises]
+    task_factory: ClassVar[Type[BaseMathTaskComponentFactory]]
 
     def __init__(
         self,
@@ -65,18 +62,7 @@ class BaseSimpleCalculationExercise:
     ) -> None:
         """Construct the task creation."""
         # Initialize exercise config
-        try:
-            # Automatic conversion of dictionaries
-            # and other types into a model
-            self._config = (
-                SimpleMathExerciseConfig.model_validate(config)
-                if config is not None
-                else SimpleMathExerciseConfig()
-            )
-        except ValidationError as e:
-            logger.error(f'Invalid exercise config: {e.errors()}')
-            logger.info('Using default configuration')
-            self._config = SimpleMathExerciseConfig()
+        self._set_config(config)
 
         # Set up operand generator
         self._operand_generator = operand_generator
@@ -86,7 +72,11 @@ class BaseSimpleCalculationExercise:
         config: SimpleMathExerciseConfig | dict[str, Any] | None = None,
     ) -> SimpleMathTask:
         """Create simple calculation task."""
-        self._set_configuration(config)
+        if config is not None:
+            self._set_config(config)
+        elif self._config is None:
+            raise AttributeError('Exercise config is not defined')
+
         self._generate_operands()
         self._create_components()
         task_dto = self._create_task_dto()
@@ -94,17 +84,18 @@ class BaseSimpleCalculationExercise:
 
     # Utility methods
 
-    def _set_configuration(
+    def _set_config(
         self,
         config: SimpleMathExerciseConfig | dict[str, Any] | None,
     ) -> None:
         """Update exercise configuration with validation."""
-        if config is not None:
-            try:
-                # Validate and convert to SimpleMathExerciseConfig.
-                self._config = SimpleMathExerciseConfig.model_validate(config)
-            except ValidationError as e:
-                logger.error(f'Invalid configuration update: {e.errors()}')
+        if isinstance(config, dict):
+            self._config = SimpleMathExerciseConfig(**config)
+        elif isinstance(config, SimpleMathExerciseConfig):
+            self._config = config
+        else:
+            raise
+
         # If config is None, keep existing configuration.
         self._init_value_range()
 
@@ -114,10 +105,12 @@ class BaseSimpleCalculationExercise:
 
     def _generate_operands(self) -> None:
         """Generate task operands."""
-        self._operand_generator.set_values(**self._config.model_dump())
+        self._operand_generator.set_values(self._min_value, self._max_value)
+
         try:
             self._operand_1 = self._operand_generator.generate()
             self._operand_2 = self._operand_generator.generate()
+
         except OperandGeneratorError as e:
             logger.error(
                 'Operand generation failed: %s. '

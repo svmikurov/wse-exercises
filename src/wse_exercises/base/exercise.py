@@ -1,15 +1,17 @@
 """Defines base exercise class."""
 
-from pydantic import BaseModel
+from dataclasses import dataclass
 
 from wse_exercises.core.mathem.enums import Exercises
 
 
-class ExerciseConfig(BaseModel):
+@dataclass
+class ExerciseConfig:
     """Exercise base config."""
 
 
-class TaskRequest(BaseModel):
+@dataclass
+class TaskRequest:
     """Request an exercise with a given configuration.
 
     :param Exercises name: Exercise name.
