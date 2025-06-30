@@ -1,3 +1,8 @@
+0.3.2
+==================
+
+- Renamed `ISimpleMathExercise` to `ISimpleMathTask`
+
 0.3.1 (30-06-2025)
 ==================
 
