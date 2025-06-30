@@ -1,9 +1,13 @@
+0.3.1 (30-06-2025)
+==================
+
+- Updated `pydantic` methods.
+- Updated tests.
+
 0.3.0 (30-06-2025)
 ==================
 
 - Downgraded `pydantic` version to 1.10.22.
-- Updated `pydantic` methods.
-- Updated tests.
 
 0.1.2 (29-05-2025)
 ==================
