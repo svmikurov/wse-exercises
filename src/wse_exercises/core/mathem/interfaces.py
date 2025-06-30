@@ -1,4 +1,5 @@
 """Defines protocol for Simple math exercise interface."""
+from typing import Protocol
 
 from wse_exercises.base.interfaces import ITask
 
@@ -16,6 +17,7 @@ class ISimpleMathTask(
         MathTaskConditions,
         MathTextTaskQuestion,
         MathTextTaskAnswer,
-    ]
+    ],
+    Protocol,
 ):
     """Protocol for Simple math exercise interface."""
