@@ -1,16 +1,23 @@
 """Test DTO."""
 
 import json
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Any
 
 import pytest
 
+from wse_exercises.core.mathem.enums import Exercises
 from wse_exercises.core.mathem.task import SimpleMathTask
 
 
+@pytest.fixture()
+def created() -> datetime:
+    """Fixture providing datetime."""
+    return datetime.now()
+
+
 @pytest.fixture
-def serialized_task() -> dict[str, Any]:
+def serialized_task(created: datetime) -> dict[str, Any]:
     """Fixture providing data for serialization tests.
 
     :return: Complete task data with timestamp
@@ -21,8 +28,8 @@ def serialized_task() -> dict[str, Any]:
         'conditions': {'operand_1': 2, 'operand_2': 3},
         'question': {'text': '2 + 3'},
         'answer': {'text': '5'},
-        'exercise_name': 'adding',
-        'created': '2025-05-21T18:00:00Z',
+        'exercise_name': Exercises.ADDING,
+        'created': created.isoformat(),
         'error_msg': '',
     }
 
@@ -30,7 +37,11 @@ def serialized_task() -> dict[str, Any]:
 class TestDTOSerialization:
     """Test suite for DTO serialization behavior."""
 
-    def test_json_serialization(self, serialized_task: dict[str, Any]) -> None:
+    def test_json_serialization(
+        self,
+        created: datetime,
+        serialized_task: dict[str, Any],
+    ) -> None:
         """Test JSON serialization roundtrip.
 
         :param dict[str, Any] serialized_task: Task data fixture
@@ -40,26 +51,28 @@ class TestDTOSerialization:
         task = SimpleMathTask(**serialized_task)
 
         # Convert to JSON string
-        json_str = task.model_dump_json()
+        json_str = task.json()
 
         # Parse JSON back to dictionary
-        loaded_data = json.loads(json_str)
+        loaded_data = SimpleMathTask.parse_raw(json_str)
 
-        assert loaded_data['config']['min_value'] == 1
-        assert loaded_data['config']['max_value'] == 9
+        assert loaded_data.config.min_value == 1
+        assert loaded_data.config.max_value == 9
 
-        assert loaded_data['conditions']['operand_1'] == 2
-        assert loaded_data['conditions']['operand_2'] == 3
+        assert loaded_data.conditions.operand_1 == 2
+        assert loaded_data.conditions.operand_2 == 3
 
-        assert loaded_data['question']['text'] == '2 + 3'
-        assert loaded_data['answer']['text'] == '5'
+        assert loaded_data.question.text == '2 + 3'
+        assert loaded_data.answer.text == '5'
 
-        assert loaded_data['exercise_name'] == 'adding'
+        assert loaded_data.exercise_name == 'adding'
 
-        assert loaded_data['created'] == '2025-05-21T18:00:00Z'
+        assert loaded_data.created == created
 
     def test_json_deserialization(
-        self, serialized_task: dict[str, Any]
+        self,
+        created: datetime,
+        serialized_task: dict[str, Any],
     ) -> None:
         """Test JSON deserialization.
 
@@ -70,7 +83,7 @@ class TestDTOSerialization:
         json_str = json.dumps(serialized_task)
 
         # Create original task from JSON
-        task = SimpleMathTask.model_validate_json(json_str)
+        task = SimpleMathTask.parse_raw(json_str)
 
         assert task.config.min_value == 1
         assert task.config.max_value == 9
@@ -83,11 +96,12 @@ class TestDTOSerialization:
 
         assert task.exercise_name == 'adding'
 
-        expected_time = datetime(2025, 5, 21, 18, 0, tzinfo=timezone.utc)
-        assert task.created == expected_time
+        assert task.created == created
 
     def test_serialization_roundtrips(
-        self, serialized_task: dict[str, Any]
+        self,
+        created: datetime,
+        serialized_task: dict[str, Any],
     ) -> None:
         """Test dictionary conversion roundtrip.
 
@@ -98,16 +112,10 @@ class TestDTOSerialization:
         task = SimpleMathTask(**serialized_task)
 
         # Dict roundtrip
-        dict_data = task.model_dump()
+        dict_data = task.dict()
+
         assert SimpleMathTask(**dict_data) == task
 
         # JSON roundtrip
-        json_data = task.model_dump_json()
-        assert SimpleMathTask.model_validate_json(json_data) == task
-
-        # Comparison of structures - convert both to comparable forms
-        json_dict = json.loads(json_data)
-        dict_data_serializable = task.model_dump(mode='json')
-
-        assert json_dict == dict_data_serializable
-        assert dict_data_serializable == serialized_task
+        json_data = task.json()
+        assert SimpleMathTask.parse_raw(json_data) == task

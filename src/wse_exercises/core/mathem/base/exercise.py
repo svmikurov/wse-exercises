@@ -3,7 +3,7 @@
 import logging
 from typing import Any, ClassVar, Type
 
-from pydantic import ConfigDict, ValidationError
+from pydantic import ValidationError
 
 from wse_exercises.base.exercise import (
     ExerciseConfig,
@@ -33,10 +33,6 @@ class SimpleMathExerciseConfig(ExerciseConfig):
 
     min_value: int = MIN_VALUE
     max_value: int = MAX_VALUE
-
-    model_config = ConfigDict(
-        arbitrary_types_allowed=True,
-    )
 
 
 class SimpleMathTaskRequest(TaskRequest):
@@ -69,7 +65,7 @@ class BaseSimpleCalculationExercise:
             # Automatic conversion of dictionaries
             # and other types into a model
             self._config = (
-                SimpleMathExerciseConfig.model_validate(config)
+                SimpleMathExerciseConfig.parse_obj(config)
                 if config is not None
                 else SimpleMathExerciseConfig()
             )
@@ -102,7 +98,7 @@ class BaseSimpleCalculationExercise:
         if config is not None:
             try:
                 # Validate and convert to SimpleMathExerciseConfig.
-                self._config = SimpleMathExerciseConfig.model_validate(config)
+                self._config = SimpleMathExerciseConfig.parse_obj(config)
             except ValidationError as e:
                 logger.error(f'Invalid configuration update: {e.errors()}')
         # If config is None, keep existing configuration.
@@ -114,7 +110,7 @@ class BaseSimpleCalculationExercise:
 
     def _generate_operands(self) -> None:
         """Generate task operands."""
-        self._operand_generator.set_values(**self._config.model_dump())
+        self._operand_generator.set_values(**self._config.dict())
         try:
             self._operand_1 = self._operand_generator.generate()
             self._operand_2 = self._operand_generator.generate()

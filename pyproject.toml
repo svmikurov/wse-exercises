@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "wse-exercises"
-version = "0.1.2"
+version = "0.3.0"
 description = "Exercises for WSE applications"
 authors = ["Sergei Mikurov <454004@mail.ru>"]
 readme = "README.md"
@@ -11,7 +11,7 @@ include = ["wse_exercises/py.typed"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-pydantic = "^2.11.4"
+pydantic = "1.10.22"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.15.0"

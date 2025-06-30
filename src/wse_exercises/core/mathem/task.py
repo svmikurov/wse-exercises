@@ -1,6 +1,8 @@
 """Defines the math task Data Transfer Objects."""
 
-from pydantic import BaseModel, model_validator
+from typing import Any
+
+from pydantic import BaseModel, validator
 
 from wse_exercises.base.task import Task, TaskConfig
 
@@ -11,12 +13,17 @@ class MathTaskConfig(TaskConfig):
     min_value: int
     max_value: int
 
-    @model_validator(mode='after')
-    def check_min_leq_max(self) -> 'MathTaskConfig':
+    @classmethod
+    @validator('max_value')
+    def check_min_less_than_max(
+        cls,
+        value: str,
+        values: dict[str, Any],
+    ) -> str:
         """Check that the minimum value is greater than the maximum."""
-        if self.min_value > self.max_value:
-            raise ValueError('The minimum value is greater than the maximum')
-        return self
+        if 'min_value' in values and value <= values['min_value']:
+            raise ValueError('max_value must be greater than min_value')
+        return value
 
 
 class MathTaskConditions(BaseModel):
@@ -56,3 +63,8 @@ class SimpleMathTask(
     :param created: The data and time of task creation.
     :param error_msg: The task creation error message.
     """
+
+    config: MathTaskConfig
+    conditions: MathTaskConditions
+    question: MathTextTaskQuestion
+    answer: MathTextTaskAnswer
