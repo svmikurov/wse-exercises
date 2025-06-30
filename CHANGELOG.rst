@@ -2,6 +2,8 @@
 ==================
 
 - Renamed `ISimpleMathExercise` to `ISimpleMathTask`
+- Updated type Task dependencies
+- Added base classes for Task components
 
 0.3.1 (30-06-2025)
 ==================
