@@ -30,7 +30,6 @@ exclude = [
     ".idea/*",
     ".venv*",
     "docs/*",
-    "*/conftest.py",
 ]
 line-length = 79
 
