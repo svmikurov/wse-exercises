@@ -10,7 +10,7 @@ from .task import (
 )
 
 
-class ISimpleMathExercise(
+class ISimpleMathTask(
     ITask[
         MathTaskConfig,
         MathTaskConditions,
