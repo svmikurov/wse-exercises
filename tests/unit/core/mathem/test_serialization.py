@@ -4,34 +4,7 @@ import json
 from datetime import datetime
 from typing import Any
 
-import pytest
-
-from wse_exercises.core.mathem.enums import Exercises
 from wse_exercises.core.mathem.task import SimpleMathTask
-
-
-@pytest.fixture()
-def created() -> datetime:
-    """Fixture providing datetime."""
-    return datetime.now()
-
-
-@pytest.fixture
-def serialized_task(created: datetime) -> dict[str, Any]:
-    """Fixture providing data for serialization tests.
-
-    :return: Complete task data with timestamp
-    :rtype: dict[str, Any]
-    """
-    return {
-        'config': {'min_value': 1, 'max_value': 9},
-        'conditions': {'operand_1': 2, 'operand_2': 3},
-        'question': {'text': '2 + 3'},
-        'answer': {'text': '5'},
-        'exercise_name': Exercises.ADDING,
-        'created': created.isoformat(),
-        'error_msg': '',
-    }
 
 
 class TestDTOSerialization:
@@ -40,7 +13,7 @@ class TestDTOSerialization:
     def test_json_serialization(
         self,
         created: datetime,
-        serialized_task: dict[str, Any],
+        simple_math_task_dict: dict[str, Any],
     ) -> None:
         """Test JSON serialization roundtrip.
 
@@ -48,7 +21,7 @@ class TestDTOSerialization:
         :rtype: None
         """
         # Create original task from fixture
-        task = SimpleMathTask(**serialized_task)
+        task = SimpleMathTask(**simple_math_task_dict)
 
         # Convert to JSON string
         json_str = task.json()
@@ -72,7 +45,7 @@ class TestDTOSerialization:
     def test_json_deserialization(
         self,
         created: datetime,
-        serialized_task: dict[str, Any],
+        simple_math_task_dict: dict[str, Any],
     ) -> None:
         """Test JSON deserialization.
 
@@ -80,7 +53,7 @@ class TestDTOSerialization:
         :rtype: None
         """
         # Convert to JSON string
-        json_str = json.dumps(serialized_task)
+        json_str = json.dumps(simple_math_task_dict)
 
         # Create original task from JSON
         task = SimpleMathTask.parse_raw(json_str)
@@ -101,7 +74,7 @@ class TestDTOSerialization:
     def test_serialization_roundtrips(
         self,
         created: datetime,
-        serialized_task: dict[str, Any],
+        simple_math_task_dict: dict[str, Any],
     ) -> None:
         """Test dictionary conversion roundtrip.
 
@@ -109,7 +82,7 @@ class TestDTOSerialization:
         :rtype: None
         """
         # Create original task from fixture
-        task = SimpleMathTask(**serialized_task)
+        task = SimpleMathTask(**simple_math_task_dict)
 
         # Dict roundtrip
         dict_data = task.dict()
