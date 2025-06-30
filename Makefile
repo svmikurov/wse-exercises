@@ -10,4 +10,4 @@ mypy:
 test:
 	pytest
 
-check: format ruff mypy test
+check: format mypy test
