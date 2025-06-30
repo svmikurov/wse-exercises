@@ -12,7 +12,7 @@ from .task import (
 )
 
 
-class ISimpleMathTask(
+class ISimpleCalcTask(
     ITask[
         MathTaskConfig,
         MathTaskConditions,
