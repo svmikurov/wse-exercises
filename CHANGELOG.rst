@@ -1,4 +1,9 @@
-0.3.2
+0.3.3 (01-07-2025)
+==================
+
+- Renamed `ISimpleMathExercise` to `ISimpleCalcTask`
+
+0.3.2 (01-07-2025)
 ==================
 
 - Renamed `ISimpleMathExercise` to `ISimpleMathTask`
