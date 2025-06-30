@@ -8,13 +8,12 @@ from pydantic import BaseModel, Field
 # TODO: Fix import
 from wse_exercises.core.mathem.enums import Exercises
 
-from .interfaces import AnswerT, QuestionT, TaskConditionsT, TaskConfigT
-
 T = TypeVar('T', bound='Task[Any, Any, Any, Any]')
 
-
-class TaskConfig(BaseModel):
-    """Task base config."""
+AnswerT = TypeVar('AnswerT')
+QuestionT = TypeVar('QuestionT')
+TaskConfigT = TypeVar('TaskConfigT')
+TaskConditionsT = TypeVar('TaskConditionsT')
 
 
 class Task(

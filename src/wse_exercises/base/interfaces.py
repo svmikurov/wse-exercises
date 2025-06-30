@@ -5,15 +5,29 @@ from typing import Any, Protocol, Type, TypeVar
 
 from wse_exercises.core.mathem.enums import Exercises
 
-AnswerT = TypeVar('AnswerT')
-QuestionT = TypeVar('QuestionT')
-TaskConfigT = TypeVar('TaskConfigT')
-TaskConditionsT = TypeVar('TaskConditionsT')
+from .componets import (
+    Answer,
+    Question,
+    TaskConditions,
+    TaskConfig,
+)
+
+TaskConfigT = TypeVar('TaskConfigT', bound=TaskConfig)
+TaskConditionsT = TypeVar('TaskConditionsT', bound=TaskConditions)
+QuestionT = TypeVar('QuestionT', bound=Question)
+AnswerT = TypeVar('AnswerT', bound=Answer)
 
 T = TypeVar('T', bound='ITask[Any, Any, Any, Any]')
 
 
-class ITask(Protocol[TaskConfigT, TaskConditionsT, QuestionT, AnswerT]):
+class ITask(
+    Protocol[
+        TaskConfigT,
+        TaskConditionsT,
+        QuestionT,
+        AnswerT,
+    ],
+):
     """The interface of the task."""
 
     config: TaskConfigT

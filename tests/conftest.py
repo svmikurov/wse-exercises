@@ -10,8 +10,8 @@ from wse_exercises.core.mathem.enums import Exercises
 from wse_exercises.core.mathem.task import (
     MathTaskConditions,
     MathTaskConfig,
-    MathTextTaskAnswer,
-    MathTextTaskQuestion,
+    MathTextAnswer,
+    MathTextQuestion,
     SimpleMathTask,
 )
 
@@ -30,8 +30,8 @@ def simple_math_task(
     return SimpleMathTask(
         config=MathTaskConfig(min_value=1, max_value=9),
         conditions=MathTaskConditions(operand_1=2, operand_2=3),
-        question=MathTextTaskQuestion(text='2 + 3'),
-        answer=MathTextTaskAnswer(text='5'),
+        question=MathTextQuestion(text='2 + 3'),
+        answer=MathTextAnswer(text='5'),
         exercise_name=Exercises.ADDING,
         created=created,
         error_msg='',

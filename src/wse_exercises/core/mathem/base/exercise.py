@@ -15,8 +15,8 @@ from wse_exercises.core.mathem.exceptions import OperandGeneratorError
 from wse_exercises.core.mathem.task import (
     MathTaskConditions,
     MathTaskConfig,
-    MathTextTaskAnswer,
-    MathTextTaskQuestion,
+    MathTextAnswer,
+    MathTextQuestion,
     SimpleMathTask,
 )
 
@@ -157,10 +157,10 @@ class BaseSimpleCalculationExercise:
                 operand_1=self._operand_1,
                 operand_2=self._operand_2,
             ),
-            question=MathTextTaskQuestion(
+            question=MathTextQuestion(
                 text=self._question,
             ),
-            answer=MathTextTaskAnswer(
+            answer=MathTextAnswer(
                 text=self._answer,
             ),
             exercise_name=self.exercise_name,

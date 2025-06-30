@@ -2,9 +2,15 @@
 
 from typing import Any
 
-from pydantic import BaseModel, validator
+from pydantic import validator
 
-from wse_exercises.base.task import Task, TaskConfig
+from wse_exercises.base.componets import (
+    Answer,
+    Question,
+    TaskConditions,
+    TaskConfig,
+)
+from wse_exercises.base.task import Task
 
 
 class MathTaskConfig(TaskConfig):
@@ -26,20 +32,20 @@ class MathTaskConfig(TaskConfig):
         return value
 
 
-class MathTaskConditions(BaseModel):
+class MathTaskConditions(TaskConditions):
     """Math task conditions."""
 
     operand_1: int
     operand_2: int
 
 
-class MathTextTaskQuestion(BaseModel):
+class MathTextQuestion(Question):
     """Math text task question."""
 
     text: str
 
 
-class MathTextTaskAnswer(BaseModel):
+class MathTextAnswer(Answer):
     """Math text task answer."""
 
     text: str
@@ -49,8 +55,8 @@ class SimpleMathTask(
     Task[
         MathTaskConfig,
         MathTaskConditions,
-        MathTextTaskQuestion,
-        MathTextTaskAnswer,
+        MathTextQuestion,
+        MathTextAnswer,
     ]
 ):
     """Base simple math task with text question/answer.
@@ -66,5 +72,5 @@ class SimpleMathTask(
 
     config: MathTaskConfig
     conditions: MathTaskConditions
-    question: MathTextTaskQuestion
-    answer: MathTextTaskAnswer
+    question: MathTextQuestion
+    answer: MathTextAnswer
