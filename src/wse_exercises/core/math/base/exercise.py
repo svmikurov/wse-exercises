@@ -10,7 +10,6 @@ from wse_exercises.base.exercise import (
     TaskRequest,
 )
 from wse_exercises.core.math.base.services import OperandGenerator
-from wse_exercises.core.math.enums import Exercises
 from wse_exercises.core.math.exceptions import OperandGeneratorError
 from wse_exercises.core.math.task import (
     MathTaskConditions,
@@ -20,6 +19,7 @@ from wse_exercises.core.math.task import (
     SimpleMathTask,
 )
 
+from ..enums import Exercises
 from .task_factory import MathTaskComponentFactory
 
 logger = logging.getLogger(__name__)

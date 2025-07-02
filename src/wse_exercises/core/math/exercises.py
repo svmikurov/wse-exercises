@@ -1,6 +1,6 @@
 """Defines mathematical exercises.
 
->>> from wse_exercises import (
+>>> from wse_exercises.core.math import (
 ...     AddingExercise,
 ...     ExactOperandGenerator,
 ... )
