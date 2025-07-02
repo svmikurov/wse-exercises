@@ -10,7 +10,7 @@ __all__ = [
     'SubtractionExercise',
 ]
 
-from wse_exercises.core.mathem import (
+from wse_exercises.core.math import (
     AddingExercise,
     DivisionExercise,
     ExactOperandGenerator,

@@ -6,8 +6,8 @@ from typing import Any
 
 import pytest
 
-from wse_exercises.core.mathem.enums import Exercises
-from wse_exercises.core.mathem.task import (
+from wse_exercises.core.math.enums import Exercises
+from wse_exercises.core.math.task import (
     MathTaskConditions,
     MathTaskConfig,
     MathTextAnswer,

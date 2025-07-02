@@ -1,7 +1,7 @@
 ## WSE Exercise Series
 
 ```python
-from wse_exercises.core.mathem import (
+from wse_exercises.core.math import (
     AddingExercise,
     RandomOperandGenerator,
 )

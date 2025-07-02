@@ -11,15 +11,15 @@ __all__ = [
     'SubtractionExercise',
 ]
 
-from wse_exercises.core.mathem.base.exercise import SimpleMathExerciseConfig
-from wse_exercises.core.mathem.enums import Exercises
-from wse_exercises.core.mathem.exercises import (
+from wse_exercises.core.math.base.exercise import SimpleMathExerciseConfig
+from wse_exercises.core.math.enums import Exercises
+from wse_exercises.core.math.exercises import (
     AddingExercise,
     DivisionExercise,
     MultiplicationExercise,
     SubtractionExercise,
 )
-from wse_exercises.core.mathem.services.operand_generator import (
+from wse_exercises.core.math.services.operand_generator import (
     ExactOperandGenerator,
     RandomOperandGenerator,
 )

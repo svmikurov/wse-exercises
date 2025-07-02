@@ -3,7 +3,7 @@
 from datetime import datetime
 from typing import Any, Protocol, Type, TypeVar
 
-from wse_exercises.core.mathem.enums import Exercises
+from wse_exercises.core.math.enums import Exercises
 
 from .componets import (
     Answer,

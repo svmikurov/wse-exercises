@@ -2,7 +2,7 @@
 
 from pydantic import BaseModel
 
-from wse_exercises.core.mathem.enums import Exercises
+from wse_exercises.core.math.enums import Exercises
 
 
 class ExerciseConfig(BaseModel):

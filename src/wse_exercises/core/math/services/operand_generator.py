@@ -2,8 +2,8 @@
 
 from random import randint
 
-from wse_exercises.core.mathem.base.services import OperandGenerator
-from wse_exercises.core.mathem.exceptions import OperandGeneratorError
+from wse_exercises.core.math.base.services import OperandGenerator
+from wse_exercises.core.math.exceptions import OperandGeneratorError
 from wse_exercises.utils.logger import setup_logging
 
 logger = setup_logging(__name__)
@@ -37,7 +37,7 @@ class ExactOperandGenerator(OperandGenerator):
     """Return value by order.
 
     Example:
-    >>> from wse_exercises.core.mathem import ExactOperandGenerator
+    >>> from wse_exercises.core.math import ExactOperandGenerator
     >>> operand_generator = ExactOperandGenerator()
     >>> operand_generator.set_values(3, 4)
     >>> operand_generator.generate()

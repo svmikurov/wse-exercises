@@ -2,7 +2,7 @@
 
 from typing import Any
 
-from wse_exercises.core.mathem.task import SimpleMathTask
+from wse_exercises.core.math.task import SimpleMathTask
 
 
 class TestPublicInterface:

@@ -6,7 +6,7 @@ from typing import Any, Generic, Type, TypeVar
 from pydantic import BaseModel, Field
 
 # TODO: Fix import
-from wse_exercises.core.mathem.enums import Exercises
+from wse_exercises.core.math.enums import Exercises
 
 T = TypeVar('T', bound='Task[Any, Any, Any, Any]')
 

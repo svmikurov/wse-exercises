@@ -9,10 +9,10 @@ from wse_exercises.base.exercise import (
     ExerciseConfig,
     TaskRequest,
 )
-from wse_exercises.core.mathem.base.services import OperandGenerator
-from wse_exercises.core.mathem.enums import Exercises
-from wse_exercises.core.mathem.exceptions import OperandGeneratorError
-from wse_exercises.core.mathem.task import (
+from wse_exercises.core.math.base.services import OperandGenerator
+from wse_exercises.core.math.enums import Exercises
+from wse_exercises.core.math.exceptions import OperandGeneratorError
+from wse_exercises.core.math.task import (
     MathTaskConditions,
     MathTaskConfig,
     MathTextAnswer,
