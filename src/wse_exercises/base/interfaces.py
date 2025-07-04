@@ -17,10 +17,31 @@ TaskConditionsT = TypeVar('TaskConditionsT', bound=TaskConditions)
 QuestionT = TypeVar('QuestionT', bound=Question)
 AnswerT = TypeVar('AnswerT', bound=Answer)
 
+ExerciseConfig = TypeVar('ExerciseConfig')
+
 T = TypeVar('T', bound='ITask[Any, Any, Any, Any]')
 
 
+class IConvertMixin(Protocol):
+    """Protocol for dict/json conversion interface."""
+
+    @classmethod
+    def from_dict(cls: Type[T], data: dict[str, Any]) -> T:
+        """Instantiate the class from a dictionary of attributes."""
+
+    @classmethod
+    def from_json(cls: Type[T], data: str | bytes) -> T:
+        """Instantiate the class from a JSON string or bytes."""
+
+    def to_dict(self) -> dict[str, Any]:
+        """Convert the instance to a dictionary."""
+
+    def to_json(self) -> str:
+        """Serialize the instance to a JSON string."""
+
+
 class ITask(
+    IConvertMixin,
     Protocol[
         TaskConfigT,
         TaskConditionsT,
@@ -38,16 +59,12 @@ class ITask(
     created: datetime
     error_msg: str
 
-    @classmethod
-    def from_dict(cls: Type[T], data: dict[str, Any]) -> T:
-        """Instantiate the class from a dictionary of attributes."""
 
-    @classmethod
-    def from_json(cls: Type[T], data: str | bytes) -> T:
-        """Instantiate the class from a JSON string or bytes."""
+class ITaskRequest(
+    IConvertMixin,
+    Protocol[ExerciseConfig],
+):
+    """Protocol for request task DTO."""
 
-    def to_dict(self) -> dict[str, Any]:
-        """Convert the instance to a dictionary."""
-
-    def to_json(self) -> str:
-        """Serialize the instance to a JSON string."""
+    name: Exercises
+    config: ExerciseConfig
