@@ -35,10 +35,8 @@ class SimpleMathExerciseConfig(ExerciseConfig):
     max_value: int = MAX_VALUE
 
 
-class SimpleMathTaskRequest(TaskRequest):
+class SimpleMathTaskRequest(TaskRequest[SimpleMathExerciseConfig]):
     """Request a simple math exercise with a given configuration."""
-
-    config: SimpleMathExerciseConfig
 
 
 class BaseSimpleCalculationExercise:
