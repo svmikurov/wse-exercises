@@ -11,7 +11,10 @@ from .mixins import ConvertMixin
 ConfigT = TypeVar('ConfigT', bound='ExerciseConfig')
 
 
-class ExerciseConfig(BaseModel):
+class ExerciseConfig(
+    ConvertMixin,
+    BaseModel,
+):
     """Exercise base config."""
 
 

@@ -68,3 +68,10 @@ class ITaskRequest(
 
     name: Exercises
     config: ExerciseConfig
+
+
+class IExerciseConfig(
+    IConvertMixin,
+    Protocol,
+):
+    """Protocol for exercise base config interface."""
