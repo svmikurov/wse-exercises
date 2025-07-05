@@ -17,7 +17,7 @@ TaskConditionsT = TypeVar('TaskConditionsT', bound=TaskConditions)
 QuestionT = TypeVar('QuestionT', bound=Question)
 AnswerT = TypeVar('AnswerT', bound=Answer)
 
-ExerciseConfig = TypeVar('ExerciseConfig')
+ExerciseConfigT = TypeVar('ExerciseConfigT')
 
 T = TypeVar('T', bound='ITask[Any, Any, Any, Any]')
 
@@ -62,12 +62,12 @@ class ITask(
 
 class ITaskRequest(
     IConvertMixin,
-    Protocol[ExerciseConfig],
+    Protocol[ExerciseConfigT],
 ):
     """Protocol for request task DTO."""
 
     name: Exercises
-    config: ExerciseConfig
+    config: ExerciseConfigT
 
 
 class IExerciseConfig(
