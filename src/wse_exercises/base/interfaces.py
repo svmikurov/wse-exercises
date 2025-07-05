@@ -75,3 +75,20 @@ class IExerciseConfig(
     Protocol,
 ):
     """Protocol for exercise base config interface."""
+
+
+class IExercise(
+    Protocol,
+):
+    """Protocol for exercise interface."""
+
+    def create_task(
+        self,
+        config: IExerciseConfig | dict[str, Any] | None = None,
+    ) -> ITask[
+        TaskConfig,
+        TaskConditions,
+        Question,
+        Answer,
+    ]:
+        """Create simple calculation task."""
