@@ -1,3 +1,12 @@
+1.0.1 (06-07-2025)
+==================
+
+- Added `ConvertMixin` to some pydatnic models for conversion between
+  dict/json
+- Added protocols
+- Renamed `BaseSimpleCalculationExercise` to `SimpleCalcExercise`
+- Added exercise type mapping `EXERCISES`
+
 1.0.0 (02-07-2025)
 ==================
 
