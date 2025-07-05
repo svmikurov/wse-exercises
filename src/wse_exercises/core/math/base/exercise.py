@@ -39,7 +39,7 @@ class SimpleMathTaskRequest(TaskRequest[SimpleMathExerciseConfig]):
     """Request a simple math exercise with a given configuration."""
 
 
-class BaseSimpleCalculationExercise:
+class SimpleCalcExercise:
     """Defines a base logic of simple calculation exercise creation.
 
     Control exercise task creation with:

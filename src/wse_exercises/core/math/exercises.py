@@ -15,7 +15,7 @@
 '11'
 """
 
-from .base.exercise import BaseSimpleCalculationExercise
+from .base.exercise import SimpleCalcExercise
 from .enums import Exercises
 from .task_factories import (
     AddingTaskFactory,
@@ -25,28 +25,28 @@ from .task_factories import (
 )
 
 
-class AddingExercise(BaseSimpleCalculationExercise):
+class AddingExercise(SimpleCalcExercise):
     """Adding exercise."""
 
     exercise_name = Exercises.ADDING
     task_factory = AddingTaskFactory
 
 
-class DivisionExercise(BaseSimpleCalculationExercise):
+class DivisionExercise(SimpleCalcExercise):
     """Division exercise."""
 
     exercise_name = Exercises.DIVISION
     task_factory = DivisionTaskFactory
 
 
-class MultiplicationExercise(BaseSimpleCalculationExercise):
+class MultiplicationExercise(SimpleCalcExercise):
     """Multiplication exercise."""
 
     exercise_name = Exercises.MULTIPLICATION
     task_factory = MultiplicationTaskFactory
 
 
-class SubtractionExercise(BaseSimpleCalculationExercise):
+class SubtractionExercise(SimpleCalcExercise):
     """Subtraction exercise."""
 
     exercise_name = Exercises.SUBTRACTION
