@@ -2,18 +2,32 @@
 
 from pydantic import BaseModel
 
+from .mixins import ConvertMixin
 
-class TaskConfig(BaseModel):
+
+class TaskConfig(
+    ConvertMixin,
+    BaseModel,
+):
     """Base config."""
 
 
-class TaskConditions(BaseModel):
+class TaskConditions(
+    ConvertMixin,
+    BaseModel,
+):
     """Base conditions."""
 
 
-class Question(BaseModel):
+class Question(
+    ConvertMixin,
+    BaseModel,
+):
     """Base question."""
 
 
-class Answer(BaseModel):
+class Answer(
+    ConvertMixin,
+    BaseModel,
+):
     """Base answer."""
