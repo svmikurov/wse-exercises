@@ -6,11 +6,11 @@ __all__ = [
     'ExactOperandGenerator',
     'MultiplicationExercise',
     'RandomOperandGenerator',
-    'SimpleMathExerciseConfig',
+    'SimpleCalcConfig',
     'SubtractionExercise',
 ]
 
-from wse_exercises.core.math.base.exercise import SimpleMathExerciseConfig
+from wse_exercises.core.math.base.components import SimpleCalcConfig
 from wse_exercises.core.math.exercises import (
     AddingExercise,
     DivisionExercise,

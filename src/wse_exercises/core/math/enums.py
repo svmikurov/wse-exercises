@@ -1,9 +1,9 @@
 """Defines enumeration of available exercise types."""
 
-from wse_exercises.base.enums import BaseEnum
+from wse_exercises.base.enums import Exercise
 
 
-class Exercises(BaseEnum):
+class MathExercise(Exercise):
     """Enumeration of available exercise types."""
 
     ADDING = 'adding'

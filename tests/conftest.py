@@ -1,67 +1,54 @@
 """Defines configuration for Pytest."""
 
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any
 
 import pytest
 
-from wse_exercises.core.math.enums import Exercises
-from wse_exercises.core.math.task import (
-    MathTaskConditions,
-    MathTaskConfig,
-    MathTextAnswer,
-    MathTextQuestion,
-    SimpleMathTask,
+from wse_exercises.base.components import TextAnswer, TextQuestion
+from wse_exercises.core.math.base.components import (
+    SimpleCalcConditions,
+    SimpleCalcConfig,
 )
-
-
-@pytest.fixture(scope='package')
-def created() -> datetime:
-    """Fixture providing datetime."""
-    return datetime.now()
+from wse_exercises.core.math.enums import MathExercise
+from wse_exercises.core.math.task import SimpleMathTask
 
 
 @pytest.fixture
-def simple_math_task(
-    created: datetime,
-) -> SimpleMathTask:
+def created() -> datetime:
+    """Fixture providing datetime."""
+    return datetime.now(timezone.utc)
+
+
+@pytest.fixture
+def adding_task_dto(created: datetime) -> SimpleMathTask:
     """Fixture providing simple math task DTO."""
     return SimpleMathTask(
-        config=MathTaskConfig(min_value=1, max_value=9),
-        conditions=MathTaskConditions(operand_1=2, operand_2=3),
-        question=MathTextQuestion(text='2 + 3'),
-        answer=MathTextAnswer(text='5'),
-        exercise_name=Exercises.ADDING,
+        config=SimpleCalcConfig(min_value=1, max_value=9),
+        conditions=SimpleCalcConditions(operand_1=2, operand_2=3),
+        question=TextQuestion(text='2 + 3'),
+        answer=TextAnswer(text='5'),
+        exercise_name=MathExercise.ADDING,
         created=created,
-        error_msg='',
     )
 
 
 @pytest.fixture
-def simple_math_task_dict(
-    created: datetime,
-) -> dict[str, Any]:
-    """Fixture providing data for serialization tests.
-
-    :return: Complete task data with timestamp
-    :rtype: dict[str, Any]
-    """
+def adding_task_data(created: datetime) -> dict[str, Any]:
+    """Fixture providing data for serialization tests."""
     return {
         'config': {'min_value': 1, 'max_value': 9},
         'conditions': {'operand_1': 2, 'operand_2': 3},
         'question': {'text': '2 + 3'},
         'answer': {'text': '5'},
-        'exercise_name': Exercises.ADDING,
+        'exercise_name': MathExercise.ADDING,
         'created': created.isoformat(),
-        'error_msg': '',
     }
 
 
 @pytest.fixture
-def simple_math_task_json(
-    simple_math_task_dict: dict[str, Any],
-) -> str:
+def adding_task_json(adding_task_data: dict[str, Any]) -> str:
     """Fixture providing data for serialization tests."""
-    json_str = json.dumps(simple_math_task_dict)
+    json_str = json.dumps(adding_task_data)
     return json_str

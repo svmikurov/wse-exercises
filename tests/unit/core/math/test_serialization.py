@@ -13,21 +13,17 @@ class TestDTOSerialization:
     def test_json_serialization(
         self,
         created: datetime,
-        simple_math_task_dict: dict[str, Any],
+        adding_task_data: dict[str, Any],
     ) -> None:
-        """Test JSON serialization roundtrip.
-
-        :param dict[str, Any] serialized_task: Task data fixture
-        :rtype: None
-        """
+        """Test JSON serialization roundtrip."""
         # Create original task from fixture
-        task = SimpleMathTask(**simple_math_task_dict)
+        task = SimpleMathTask(**adding_task_data)
 
         # Convert to JSON string
-        json_str = task.json()
+        json_str = task.to_json()
 
         # Parse JSON back to dictionary
-        loaded_data = SimpleMathTask.parse_raw(json_str)
+        loaded_data = SimpleMathTask.from_json(json_str)
 
         assert loaded_data.config.min_value == 1
         assert loaded_data.config.max_value == 9
@@ -45,18 +41,14 @@ class TestDTOSerialization:
     def test_json_deserialization(
         self,
         created: datetime,
-        simple_math_task_dict: dict[str, Any],
+        adding_task_data: dict[str, Any],
     ) -> None:
-        """Test JSON deserialization.
-
-        :param dict[str, Any] serialized_task: Task data fixture
-        :rtype: None
-        """
+        """Test JSON deserialization."""
         # Convert to JSON string
-        json_str = json.dumps(simple_math_task_dict)
+        json_str = json.dumps(adding_task_data)
 
         # Create original task from JSON
-        task = SimpleMathTask.parse_raw(json_str)
+        task = SimpleMathTask.from_json(json_str)
 
         assert task.config.min_value == 1
         assert task.config.max_value == 9
@@ -74,21 +66,17 @@ class TestDTOSerialization:
     def test_serialization_roundtrips(
         self,
         created: datetime,
-        simple_math_task_dict: dict[str, Any],
+        adding_task_data: dict[str, Any],
     ) -> None:
-        """Test dictionary conversion roundtrip.
-
-        :param dict[str, Any] serialized_task: Task data fixture
-        :rtype: None
-        """
+        """Test dictionary conversion roundtrip."""
         # Create original task from fixture
-        task = SimpleMathTask(**simple_math_task_dict)
+        task = SimpleMathTask(**adding_task_data)
 
         # Dict roundtrip
-        dict_data = task.dict()
+        dict_data = task.to_dict()
 
         assert SimpleMathTask(**dict_data) == task
 
         # JSON roundtrip
-        json_data = task.json()
-        assert SimpleMathTask.parse_raw(json_data) == task
+        json_data = task.to_json()
+        assert SimpleMathTask.from_json(json_data) == task

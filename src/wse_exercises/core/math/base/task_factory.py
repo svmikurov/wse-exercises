@@ -3,7 +3,7 @@
 from abc import ABC, abstractmethod
 
 
-class MathTaskComponentFactory(ABC):
+class SimpleCalcFactory(ABC):
     """Abstract base class for simple math task component factory."""
 
     @classmethod

@@ -1,3 +1,12 @@
+0.4.0 (08-07-2025)
+==================
+
+- Added `ConvertMixin` and `BaseShema`
+- Added exercise type mapping `MATH_EXERCISES`
+- Renamed classes
+- Rename `mathem` package to `math`
+- Update imports
+
 0.3.3 (01-07-2025)
 ==================
 

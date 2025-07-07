@@ -9,5 +9,9 @@ class BaseEnum(str, Enum):
     value: str
 
     def __str__(self) -> str:
-        """Return button text."""
+        """Return value text."""
         return self.value
+
+
+class Exercise(BaseEnum):
+    """Base class for exercise enumerations."""
