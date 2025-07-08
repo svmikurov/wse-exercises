@@ -7,7 +7,7 @@ from .base.components import SimpleCalcConditions, SimpleCalcConfig
 from .enums import MathExercise
 
 
-class SimpleMathTask(
+class SimpleCalcTask(
     Task[
         SimpleCalcConfig,
         SimpleCalcConditions,

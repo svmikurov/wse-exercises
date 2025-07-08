@@ -9,7 +9,7 @@ from wse_exercises.base.rest import (
 
 from . import SimpleCalcConfig
 from .enums import MathExercise
-from .task import SimpleMathTask
+from .task import SimpleCalcTask
 
 
 class SimpleCalcRequest(TaskRequest[MathExercise, SimpleCalcConfig]):
@@ -19,10 +19,10 @@ class SimpleCalcRequest(TaskRequest[MathExercise, SimpleCalcConfig]):
     config: SimpleCalcConfig
 
 
-class SimpleCalcResponse(TaskResponse[SimpleMathTask]):
+class SimpleCalcResponse(TaskResponse[SimpleCalcTask]):
     """Response model with crated simple calculation task."""
 
-    task: SimpleMathTask
+    task: SimpleCalcTask
 
 
 class SimpleCalcHandle(HandleAnswer[TextAnswer]):

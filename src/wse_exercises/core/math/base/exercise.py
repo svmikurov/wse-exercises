@@ -9,7 +9,7 @@ from wse_exercises.base.components import TextAnswer, TextQuestion
 
 from ..enums import MathExercise
 from ..exceptions import OperandGeneratorError
-from ..task import SimpleMathTask
+from ..task import SimpleCalcTask
 from .components import SimpleCalcConditions, SimpleCalcConfig
 from .services import OperandGenerator
 from .task_factory import SimpleCalcFactory
@@ -56,7 +56,7 @@ class SimpleCalcExercise:
     def create_task(
         self,
         config: SimpleCalcConfig | dict[str, Any] | None = None,
-    ) -> SimpleMathTask:
+    ) -> SimpleCalcTask:
         """Create simple calculation task."""
         self._set_configuration(config)
         self._generate_operands()
@@ -121,9 +121,9 @@ class SimpleCalcExercise:
             self._operand_1, self._operand_2
         )
 
-    def _create_task_dto(self) -> SimpleMathTask:
+    def _create_task_dto(self) -> SimpleCalcTask:
         """Create simple math task Data Transfer Object."""
-        return SimpleMathTask(
+        return SimpleCalcTask(
             config=SimpleCalcConfig(
                 min_value=self._min_value,
                 max_value=self._max_value,

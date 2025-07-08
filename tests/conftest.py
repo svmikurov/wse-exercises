@@ -12,7 +12,7 @@ from wse_exercises.core.math.base.components import (
     SimpleCalcConfig,
 )
 from wse_exercises.core.math.enums import MathExercise
-from wse_exercises.core.math.task import SimpleMathTask
+from wse_exercises.core.math.task import SimpleCalcTask
 
 
 @pytest.fixture
@@ -22,9 +22,9 @@ def created() -> datetime:
 
 
 @pytest.fixture
-def adding_task_dto(created: datetime) -> SimpleMathTask:
+def adding_task_dto(created: datetime) -> SimpleCalcTask:
     """Fixture providing simple math task DTO."""
-    return SimpleMathTask(
+    return SimpleCalcTask(
         config=SimpleCalcConfig(min_value=1, max_value=9),
         conditions=SimpleCalcConditions(operand_1=2, operand_2=3),
         question=TextQuestion(text='2 + 3'),
