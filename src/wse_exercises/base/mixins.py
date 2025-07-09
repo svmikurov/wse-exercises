@@ -3,7 +3,9 @@
 from datetime import datetime
 from typing import Any, Type, TypeVar
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
+
+from .exeptions import ConversionError
 
 T = TypeVar('T', bound='ConvertMixin')
 
@@ -14,12 +16,32 @@ class ConvertMixin(BaseModel):
     @classmethod
     def from_dict(cls: Type[T], data: dict[str, Any]) -> T:
         """Instantiate the class from a dictionary of attributes."""
-        return cls.parse_obj(data)
+        if not isinstance(data, dict):
+            raise ConversionError(
+                f'Expected dict, got {type(data).__name__}',
+            )
+        try:
+            return cls.parse_obj(data)
+        except ValidationError as e:
+            raise ConversionError(
+                'Data validate filed',
+                errors=e.errors(),
+            ) from e
 
     @classmethod
     def from_json(cls: Type[T], data: str | bytes) -> T:
         """Instantiate the class from a JSON string or bytes."""
-        return cls.parse_raw(data)
+        if not isinstance(data, (str, bytes)):
+            raise ConversionError(
+                f'Expected str/bytes, got {type(data).__name__}',
+            )
+        try:
+            return cls.parse_raw(data)
+        except ValidationError as e:
+            raise ConversionError(
+                'JSON validation failed',
+                errors=e.errors(),
+            ) from e
 
     def to_dict(self) -> dict[str, Any]:
         """Convert the instance to a dictionary."""
