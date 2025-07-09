@@ -18,6 +18,17 @@ def division_request_data() -> dict[str, Any]:
         },
     }
 
+task_data = {
+    'uid': '4178d9d3-e916-422a-b411-8b2e87cb4939',
+    'task': {
+        'config': {'min_value': 1, 'max_value': 9},
+        'conditions': {'operand_1': 6, 'operand_2': 3},
+        'question': {'text': '6 + 3'},
+        'answer': {'text': '9'},
+        'exercise_name': 'adding',
+        'created': '2025-07-08T00:22:49.015256+00:00'},
+}
+
 
 def test_create_simple_calc_request_model(
     division_request_data: dict[str, Any],

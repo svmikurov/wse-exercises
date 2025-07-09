@@ -5,13 +5,13 @@ __all__ = [
     'MATH_EXERCISES',
 ]
 
-from wse_exercises.core.math import (
+from .math import (
     AddingExercise,
     DivisionExercise,
     MultiplicationExercise,
     SubtractionExercise,
 )
-from wse_exercises.core.math.enums import MathExercise
+from .math.enums import MathExercise
 
 MATH_EXERCISES = {
     MathExercise.ADDING: AddingExercise,
