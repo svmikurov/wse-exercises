@@ -35,7 +35,9 @@ class HandleAnswer(BaseShema, Generic[AnswerT]):
 
     :param str uid: The unique identifier of task.
     :param AnswerT answer: Answer to handle.
+    :param bool is_rewardable: Is there a reward for the correct answer?
     """
 
     uid: str
     answer: AnswerT
+    is_rewardable: bool = False
