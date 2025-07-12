@@ -25,7 +25,7 @@ class SimpleCalcResponse(TaskResponse[SimpleCalcTask]):
     task: SimpleCalcTask
 
 
-class SimpleCalcHandle(HandleAnswer[TextAnswer]):
+class SimpleCalcAnswer(HandleAnswer[TextAnswer]):
     """Model for request the answer handling of simple calculation."""
 
     answer: TextAnswer
