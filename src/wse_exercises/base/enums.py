@@ -13,5 +13,5 @@ class BaseEnum(str, Enum):
         return self.value
 
 
-class Exercise(BaseEnum):
+class ExerciseEnum(BaseEnum):
     """Base class for exercise enumerations."""
