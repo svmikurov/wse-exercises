@@ -43,3 +43,12 @@ class CheckRequest(BaseShema, Generic[AnswerT]):
     uid: str
     answer: AnswerT
     is_rewardable: bool = False
+
+
+class CheckResponse(BaseShema):
+    """Response model with user answer check result.
+
+    :param bool is_correct: The user answer check result.
+    """
+
+    is_correct: bool
