@@ -2,7 +2,7 @@
 
 from wse_exercises.base.components import TextAnswer
 from wse_exercises.base.rest import (
-    HandleAnswer,
+    CheckRequest,
     TaskRequest,
     TaskResponse,
 )
@@ -25,7 +25,7 @@ class SimpleCalcResponse(TaskResponse[SimpleCalcTask]):
     task: SimpleCalcTask
 
 
-class SimpleCalcAnswer(HandleAnswer[TextAnswer]):
+class SimpleCalcAnswer(CheckRequest[TextAnswer]):
     """Model for request the answer handling of simple calculation."""
 
     answer: TextAnswer

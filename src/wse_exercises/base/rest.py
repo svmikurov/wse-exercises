@@ -32,8 +32,8 @@ class TaskResponse(BaseShema, Generic[TaskT]):
     task: TaskT
 
 
-class HandleAnswer(BaseShema, Generic[AnswerT]):
-    """Model for request the answer handling.
+class CheckRequest(BaseShema, Generic[AnswerT]):
+    """Model for request the answer check.
 
     :param str uid: The unique identifier of task.
     :param AnswerT answer: Answer to handle.
