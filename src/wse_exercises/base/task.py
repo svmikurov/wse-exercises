@@ -1,19 +1,19 @@
 """Defines base class for task."""
 
 from datetime import datetime, timezone
-from typing import Generic, TypeVar
+from typing import Generic
 
 from pydantic import Field
 
-from .components import Answer, Conditions, Config, Question
-from .enums import Exercise
-from .model import BaseShema
+from wse_exercises.types import (
+    AnswerT,
+    ConditionsT,
+    ConfigT,
+    ExerciseT,
+    QuestionT,
+)
 
-ConfigT = TypeVar('ConfigT', bound=Config)
-ConditionsT = TypeVar('ConditionsT', bound=Conditions)
-QuestionT = TypeVar('QuestionT', bound=Question)
-AnswerT = TypeVar('AnswerT', bound=Answer)
-ExerciseT = TypeVar('ExerciseT', bound=Exercise)
+from .model import BaseShema
 
 
 class Task(

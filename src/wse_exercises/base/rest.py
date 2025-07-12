@@ -2,8 +2,10 @@
 
 from typing import Any, Generic, TypeVar
 
+from wse_exercises.types import AnswerT, ConfigT, ExerciseT
+
 from .model import BaseShema
-from .task import AnswerT, ConfigT, ExerciseT, Task
+from .task import Task
 
 TaskT = TypeVar('TaskT', bound=Task[Any, Any, Any, Any, Any])
 
