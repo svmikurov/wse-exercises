@@ -1,9 +1,13 @@
 """Defines the math task Data Transfer Objects."""
 
-from wse_exercises.base.components import TextAnswer, TextQuestion
 from wse_exercises.base.task import Task
 
-from .base.components import SimpleCalcConditions, SimpleCalcConfig
+from .base.components import (
+    SimpleCalcAnswer,
+    SimpleCalcConditions,
+    SimpleCalcConfig,
+    SimpleCalcQuestion,
+)
 from .enums import MathExercise
 
 
@@ -11,8 +15,8 @@ class SimpleCalcTask(
     Task[
         SimpleCalcConfig,
         SimpleCalcConditions,
-        TextQuestion,
-        TextAnswer,
+        SimpleCalcQuestion,
+        SimpleCalcAnswer,
         MathExercise,
     ]
 ):
@@ -28,6 +32,6 @@ class SimpleCalcTask(
 
     config: SimpleCalcConfig
     conditions: SimpleCalcConditions
-    question: TextQuestion
-    answer: TextAnswer
+    question: SimpleCalcQuestion
+    answer: SimpleCalcAnswer
     exercise_name: MathExercise

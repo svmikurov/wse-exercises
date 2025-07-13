@@ -5,12 +5,15 @@ from typing import Any, ClassVar, Type
 
 from pydantic import ValidationError
 
-from wse_exercises.base.components import TextAnswer, TextQuestion
-
 from ..enums import MathExercise
 from ..exceptions import OperandGeneratorError
 from ..task import SimpleCalcTask
-from .components import SimpleCalcConditions, SimpleCalcConfig
+from .components import (
+    SimpleCalcAnswer,
+    SimpleCalcConditions,
+    SimpleCalcConfig,
+    SimpleCalcQuestion,
+)
 from .services import OperandGenerator
 from .task_factory import SimpleCalcFactory
 
@@ -132,7 +135,7 @@ class SimpleCalcExercise:
                 operand_1=self._operand_1,
                 operand_2=self._operand_2,
             ),
-            question=TextQuestion(text=self._question),
-            answer=TextAnswer(text=self._answer),
+            question=SimpleCalcQuestion(text=self._question),
+            answer=SimpleCalcAnswer(text=self._answer),
             exercise_name=self.exercise_name,
         )

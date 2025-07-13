@@ -6,10 +6,11 @@ from typing import Any
 
 import pytest
 
-from wse_exercises.base.components import TextAnswer, TextQuestion
 from wse_exercises.core.math.base.components import (
+    SimpleCalcAnswer,
     SimpleCalcConditions,
     SimpleCalcConfig,
+    SimpleCalcQuestion,
 )
 from wse_exercises.core.math.enums import MathExercise
 from wse_exercises.core.math.task import SimpleCalcTask
@@ -27,8 +28,8 @@ def adding_task_dto(created: datetime) -> SimpleCalcTask:
     return SimpleCalcTask(
         config=SimpleCalcConfig(min_value=1, max_value=9),
         conditions=SimpleCalcConditions(operand_1=2, operand_2=3),
-        question=TextQuestion(text='2 + 3'),
-        answer=TextAnswer(text='5'),
+        question=SimpleCalcQuestion(text='2 + 3'),
+        answer=SimpleCalcAnswer(text='5'),
         exercise_name=MathExercise.ADDING,
         created=created,
     )
