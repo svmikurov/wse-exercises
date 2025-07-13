@@ -1,17 +1,22 @@
-"""Defines mathematical task components."""
+"""Defines mathematical task component models."""
 
 from typing import Any
 
 from pydantic import validator
 
-from wse_exercises.base.components import Conditions, Config
+from wse_exercises.base.components import (
+    Conditions,
+    Config,
+    TextAnswer,
+    TextQuestion,
+)
 
 MIN_VALUE = 1
 MAX_VALUE = 9
 
 
 class SimpleCalcConfig(Config):
-    """Exercise config to create simple calculation task."""
+    """Simple calculation math task config model."""
 
     min_value: int = MIN_VALUE
     max_value: int = MAX_VALUE
@@ -30,7 +35,15 @@ class SimpleCalcConfig(Config):
 
 
 class SimpleCalcConditions(Conditions):
-    """Exercise conditions to create simple calculation math task."""
+    """Simple calculation math task conditions model."""
 
     operand_1: int
     operand_2: int
+
+
+class SimpleCalcQuestion(TextQuestion):
+    """Simple calculation math task question model."""
+
+
+class SimpleCalcAnswer(TextAnswer):
+    """Simple calculation math task answer model."""
