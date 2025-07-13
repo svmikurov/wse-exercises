@@ -3,6 +3,7 @@
 from wse_exercises.base.components import TextAnswer
 from wse_exercises.base.rest import (
     CheckRequest,
+    CheckResponse,
     TaskRequest,
     TaskResponse,
 )
@@ -29,3 +30,7 @@ class SimpleCalcAnswer(CheckRequest[TextAnswer]):
     """Model for request the answer handling of simple calculation."""
 
     answer: TextAnswer
+
+
+class SimpleCalcResult(CheckResponse):
+    """Response model with simple calculation answer checking result."""
