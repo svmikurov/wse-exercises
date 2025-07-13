@@ -5,7 +5,7 @@ from typing import Generic
 
 from pydantic import Field
 
-from wse_exercises.types import (
+from wse_exercises import (
     AnswerT,
     ConditionsT,
     ConfigT,

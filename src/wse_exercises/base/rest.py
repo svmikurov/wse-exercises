@@ -1,14 +1,11 @@
 """Defines pydantic v1 models for REST API."""
 
 import uuid
-from typing import Any, Generic, TypeVar
+from typing import Generic
 
-from wse_exercises.types import AnswerT, ConfigT, ExerciseT
+from wse_exercises import AnswerT, ConfigT, ExerciseT, TaskT
 
 from .model import BaseShema
-from .task import Task
-
-TaskT = TypeVar('TaskT', bound=Task[Any, Any, Any, Any, Any])
 
 
 class TaskRequest(BaseShema, Generic[ExerciseT, ConfigT]):
