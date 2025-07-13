@@ -1,5 +1,6 @@
 """Defines pydantic v1 models for REST API."""
 
+import uuid
 from typing import Any, Generic, TypeVar
 
 from wse_exercises.types import AnswerT, ConfigT, ExerciseT
@@ -24,23 +25,23 @@ class TaskRequest(BaseShema, Generic[ExerciseT, ConfigT]):
 class TaskResponse(BaseShema, Generic[TaskT]):
     """Response model with crated task.
 
-    :param str uid: The unique identifier of task.
+    :param uuid.UUID uid: The unique identifier of task.
     :param TaskT task: Created task.
     """
 
-    uid: str
+    uid: uuid.UUID
     task: TaskT
 
 
 class CheckRequest(BaseShema, Generic[AnswerT]):
     """Model for request the answer check.
 
-    :param str uid: The unique identifier of task.
+    :param uuid.UUID uid: The unique identifier of task.
     :param AnswerT answer: Answer to handle.
     :param bool is_rewardable: Is there a reward for the correct answer?
     """
 
-    uid: str
+    uid: uuid.UUID
     answer: AnswerT
     is_rewardable: bool = False
 
