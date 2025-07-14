@@ -17,6 +17,7 @@ class TaskRequest(BaseShema, Generic[ExerciseT, ConfigT]):
 
     name: ExerciseT
     config: ConfigT
+    is_rewardable: bool = False
 
 
 class TaskResponse(BaseShema, Generic[TaskT]):
