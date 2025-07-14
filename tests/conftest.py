@@ -1,6 +1,7 @@
 """Defines configuration for Pytest."""
 
 import json
+import uuid
 from datetime import datetime, timezone
 from typing import Any
 
@@ -20,6 +21,12 @@ from wse_exercises.core.math.task import SimpleCalcTask
 def created() -> datetime:
     """Fixture providing datetime."""
     return datetime.now(timezone.utc)
+
+
+@pytest.fixture
+def uid() -> uuid.UUID:
+    """Fixture providing the uid."""
+    return uuid.uuid4()
 
 
 @pytest.fixture
