@@ -36,7 +36,7 @@ class TestDTOSerialization:
 
         assert loaded_data.exercise_name == 'adding'
 
-        assert loaded_data.created == created
+        assert loaded_data.created_at == created
 
     def test_json_deserialization(
         self,
@@ -61,7 +61,7 @@ class TestDTOSerialization:
 
         assert task.exercise_name == 'adding'
 
-        assert task.created == created
+        assert task.created_at == created
 
     def test_serialization_roundtrips(
         self,

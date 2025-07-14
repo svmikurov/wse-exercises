@@ -38,7 +38,7 @@ def adding_task_dto(created: datetime) -> SimpleCalcTask:
         question=SimpleCalcQuestion(text='2 + 3'),
         answer=SimpleCalcAnswer(text='5'),
         exercise_name=MathExercise.ADDING,
-        created=created,
+        created_at=created,
     )
 
 
@@ -51,7 +51,7 @@ def adding_task_data(created: datetime) -> dict[str, Any]:
         'question': {'text': '2 + 3'},
         'answer': {'text': '5'},
         'exercise_name': MathExercise.ADDING,
-        'created': created.isoformat(),
+        'created_at': created.isoformat(),
     }
 
 
