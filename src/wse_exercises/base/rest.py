@@ -1,7 +1,10 @@
 """Defines pydantic v1 models for REST API."""
 
 import uuid
+from datetime import datetime, timezone
 from typing import Generic
+
+from pydantic import Field
 
 from wse_exercises import AnswerT, ConfigT, ExerciseT, TaskT
 
@@ -51,3 +54,6 @@ class CheckResponse(BaseShema):
     """
 
     is_correct: bool
+    checked_at: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc),
+    )
