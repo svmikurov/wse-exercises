@@ -1,14 +1,16 @@
 """Test REST API models."""
 
+import uuid
 from typing import Any
 
 import pytest
 
-from wse_exercises.core.math.rest import SimpleCalcRequest
+from wse_exercises.core.math import SimpleCalcTask
+from wse_exercises.core.math.rest import SimpleCalcResponse
 
 
 @pytest.fixture
-def division_request_data() -> dict[str, Any]:
+def request_data() -> dict[str, Any]:
     """Fixture providing request data of division task."""
     return {
         'name': 'multiplication',
@@ -16,11 +18,30 @@ def division_request_data() -> dict[str, Any]:
             'min_value': 3,
             'max_value': 9,
         },
+        'is_rewardable': True,
     }
 
 
-def test_create_simple_calc_request_model(
-    division_request_data: dict[str, Any],
+@pytest.fixture
+def response_dto(
+    uid: uuid.UUID,
+    adding_task_dto: SimpleCalcTask,
+) -> SimpleCalcResponse:
+    """Fixture providing response DTO of simple calculation task."""
+    return SimpleCalcResponse(
+        uid=uid,
+        task=adding_task_dto,
+    )
+
+
+def test_task_response_roundtrip(
+    response_dto: SimpleCalcResponse,
 ) -> None:
-    """Test the initialization of model for simple calc request."""
-    SimpleCalcRequest.from_dict(division_request_data)
+    """Test the simple calculation task response DTO creating."""
+    # Dict roundtrip: DTO -> Dict -> DTO
+    data = response_dto.to_dict()
+    assert response_dto == SimpleCalcResponse.from_dict(data)
+
+    # Json roundtrip: DTO -> Json -> DTO
+    json_data = response_dto.to_json()
+    assert response_dto == SimpleCalcResponse.from_json(json_data)
