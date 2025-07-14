@@ -1,9 +1,10 @@
 """Defines mixins."""
 
+import uuid
 from datetime import datetime
 from typing import Any, Type, TypeVar
 
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel, ValidationError, validator
 
 from .exeptions import ConversionError
 
@@ -52,6 +53,8 @@ class ConvertMixin(BaseModel):
             for key, value in data.items():
                 if isinstance(value, datetime):
                     dict_data[key] = value.isoformat()
+                elif isinstance(value, uuid.UUID):
+                    dict_data[key] = str(value)
                 elif isinstance(value, dict):
                     dict_data[key] = convert_datetime(value)
                 else:
@@ -64,3 +67,13 @@ class ConvertMixin(BaseModel):
     def to_json(self) -> str:
         """Serialize the instance to a JSON string."""
         return self.json()
+
+    @classmethod
+    @validator('*', pre=True)
+    def _validate_uuid_fields(cls, value: object) -> object:
+        if isinstance(value, str):
+            try:
+                return uuid.UUID(value)
+            except (ValueError, AttributeError):
+                pass
+        return value
