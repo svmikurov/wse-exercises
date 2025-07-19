@@ -32,7 +32,7 @@ class TestDTOSerialization:
         assert loaded_data.conditions.operand_2 == 3
 
         assert loaded_data.question.text == '2 + 3'
-        assert loaded_data.answer.text == '5'
+        assert loaded_data.answer.number == 5
 
         assert loaded_data.exercise_name == 'adding'
 
@@ -57,7 +57,7 @@ class TestDTOSerialization:
         assert task.conditions.operand_2 == 3
 
         assert task.question.text == '2 + 3'
-        assert task.answer.text == '5'
+        assert task.answer.number == 5
 
         assert task.exercise_name == 'adding'
 

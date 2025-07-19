@@ -11,8 +11,8 @@
 >>> task = exercise.create_task()
 >>> task.question.text
 '2 + 9'
->>> task.answer.text
-'11'
+>>> task.answer.number
+11
 """
 
 from .base.exercise import SimpleCalcExercise

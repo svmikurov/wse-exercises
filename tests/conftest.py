@@ -33,10 +33,10 @@ def uid() -> uuid.UUID:
 def adding_task_dto(created: datetime) -> SimpleCalcTask:
     """Fixture providing simple math task DTO."""
     return SimpleCalcTask(
-        config=SimpleCalcConfig(min_value=1, max_value=9),
+        config=SimpleCalcConfig(min_value=1, max_value=9, ttl=3600),
         conditions=SimpleCalcConditions(operand_1=2, operand_2=3),
         question=SimpleCalcQuestion(text='2 + 3'),
-        answer=SimpleCalcAnswer(text='5'),
+        answer=SimpleCalcAnswer(number=5),
         exercise_name=MathExercise.ADDING,
         created_at=created,
     )
@@ -46,10 +46,10 @@ def adding_task_dto(created: datetime) -> SimpleCalcTask:
 def adding_task_data(created: datetime) -> dict[str, Any]:
     """Fixture providing data for serialization tests."""
     return {
-        'config': {'min_value': 1, 'max_value': 9},
-        'conditions': {'operand_1': 2, 'operand_2': 3},
+        'config': {'ttl': 3600, 'min_value': 1, 'max_value': 9},
+        'conditions': {'operand_1': 2, 'operand_2': 3, 'time': 60},
         'question': {'text': '2 + 3'},
-        'answer': {'text': '5'},
+        'answer': {'number': 5},
         'exercise_name': MathExercise.ADDING,
         'created_at': created.isoformat(),
     }

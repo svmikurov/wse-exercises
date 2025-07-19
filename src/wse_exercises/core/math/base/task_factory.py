@@ -19,11 +19,11 @@ class SimpleCalcFactory(ABC):
 
     @classmethod
     @abstractmethod
-    def create_answer(cls, op1: int, op2: int) -> str:
+    def create_answer(cls, op1: int, op2: int) -> int:
         """Create an answer to a simple math task.
 
         :param int op1: First calculation operand
         :param int op2: Second calculation operand
         :return: Text representation of answer
-        :rtype: str
+        :rtype: int
         """
