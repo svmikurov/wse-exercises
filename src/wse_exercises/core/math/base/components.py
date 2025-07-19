@@ -2,12 +2,12 @@
 
 from typing import Any
 
-from pydantic import validator
+from pydantic import Field, validator
 
 from wse_exercises.base.components import (
     Conditions,
     Config,
-    TextAnswer,
+    NumberAnswer,
     TextQuestion,
 )
 
@@ -39,11 +39,12 @@ class SimpleCalcConditions(Conditions):
 
     operand_1: int
     operand_2: int
+    time: int = Field(default=60, description='Time for task solution')
 
 
 class SimpleCalcQuestion(TextQuestion):
     """Simple calculation math task question model."""
 
 
-class SimpleCalcAnswer(TextAnswer):
+class SimpleCalcAnswer(NumberAnswer):
     """Simple calculation math task answer model."""

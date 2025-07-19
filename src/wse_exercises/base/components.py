@@ -1,10 +1,19 @@
 """Defines base task components."""
 
+from pydantic import Field
+
 from .model import BaseShema
+
+DEFAULT_TTL = 3600
 
 
 class Config(BaseShema):
     """Base exercise config model to create task."""
+
+    ttl: int = Field(
+        default=DEFAULT_TTL,
+        description='Time to complete the task',
+    )
 
 
 class Conditions(BaseShema):
@@ -35,3 +44,12 @@ class TextAnswer(Answer):
     """
 
     text: str
+
+
+class NumberAnswer(Answer):
+    """Number representation of answer.
+
+    :param int number: Number answer.
+    """
+
+    number: int
