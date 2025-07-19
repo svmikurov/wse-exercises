@@ -136,6 +136,6 @@ class SimpleCalcExercise:
                 operand_2=self._operand_2,
             ),
             question=SimpleCalcQuestion(text=self._question),
-            answer=SimpleCalcAnswer(text=self._answer),
+            answer=SimpleCalcAnswer(number=self._answer),
             exercise_name=self.exercise_name,
         )
