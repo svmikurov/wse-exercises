@@ -2,7 +2,7 @@
 
 import uuid
 from datetime import datetime, timezone
-from typing import Generic
+from typing import Any, Generic, TypeVar
 
 from pydantic import Field
 
@@ -57,3 +57,16 @@ class CheckResponse(BaseShema):
     checked_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc),
     )
+
+
+TaskRequestT_contra = TypeVar(
+    'TaskRequestT_contra',
+    bound=TaskRequest[Any, Any],
+    contravariant=True,
+)
+
+CheckRequest_contra = TypeVar(
+    'CheckRequest_contra',
+    bound=CheckRequest[Any],
+    contravariant=True,
+)
