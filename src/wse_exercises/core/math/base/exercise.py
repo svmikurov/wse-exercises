@@ -5,7 +5,7 @@ from typing import Any, ClassVar, Type
 
 from pydantic import ValidationError
 
-from ..enums import MathExercise
+from ..enums import MathEnum
 from ..exceptions import OperandGeneratorError
 from ..task import SimpleCalcTask
 from .components import (
@@ -30,7 +30,7 @@ class SimpleCalcExercise:
        random generator or as exact operands.
     """
 
-    exercise_name: ClassVar[MathExercise]
+    exercise_name: ClassVar[MathEnum]
     task_factory: ClassVar[Type[SimpleCalcFactory]]
 
     def __init__(

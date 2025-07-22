@@ -12,14 +12,14 @@ from wse_exercises.base.rest import (
 )
 
 from . import SimpleCalcConfig
-from .enums import MathExercise
+from .enums import MathEnum
 from .task import SimpleCalcTask
 
 
-class SimpleCalcRequest(TaskRequest[MathExercise, SimpleCalcConfig]):
+class SimpleCalcRequest(TaskRequest[MathEnum, SimpleCalcConfig]):
     """Model for request the simple calculation task."""
 
-    name: MathExercise
+    name: MathEnum
     config: SimpleCalcConfig
 
 

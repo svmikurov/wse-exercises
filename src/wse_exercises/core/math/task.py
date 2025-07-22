@@ -8,7 +8,7 @@ from .base.components import (
     SimpleCalcConfig,
     SimpleCalcQuestion,
 )
-from .enums import MathExercise
+from .enums import MathEnum
 
 
 class SimpleCalcTask(
@@ -17,7 +17,7 @@ class SimpleCalcTask(
         SimpleCalcConditions,
         SimpleCalcQuestion,
         SimpleCalcAnswer,
-        MathExercise,
+        MathEnum,
     ]
 ):
     """Base simple math task with text question/answer.
@@ -34,4 +34,4 @@ class SimpleCalcTask(
     conditions: SimpleCalcConditions
     question: SimpleCalcQuestion
     answer: SimpleCalcAnswer
-    exercise_name: MathExercise
+    exercise_name: MathEnum

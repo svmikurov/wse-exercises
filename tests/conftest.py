@@ -13,7 +13,7 @@ from wse_exercises.core.math.base.components import (
     SimpleCalcConfig,
     SimpleCalcQuestion,
 )
-from wse_exercises.core.math.enums import MathExercise
+from wse_exercises.core.math.enums import MathEnum
 from wse_exercises.core.math.task import SimpleCalcTask
 
 
@@ -37,7 +37,7 @@ def adding_task_dto(created: datetime) -> SimpleCalcTask:
         conditions=SimpleCalcConditions(operand_1=2, operand_2=3),
         question=SimpleCalcQuestion(text='2 + 3'),
         answer=SimpleCalcAnswer(number=5),
-        exercise_name=MathExercise.ADDING,
+        exercise_name=MathEnum.ADDING,
         created_at=created,
     )
 
@@ -50,7 +50,7 @@ def adding_task_data(created: datetime) -> dict[str, Any]:
         'conditions': {'operand_1': 2, 'operand_2': 3, 'time': 60},
         'question': {'text': '2 + 3'},
         'answer': {'number': 5},
-        'exercise_name': MathExercise.ADDING,
+        'exercise_name': MathEnum.ADDING,
         'created_at': created.isoformat(),
     }
 

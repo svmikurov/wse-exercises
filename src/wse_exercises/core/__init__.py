@@ -1,7 +1,7 @@
 """Core business logic package for WSE Exercise Series."""
 
 __all__ = [
-    'MathExercise',
+    'MathEnum',
     'MATH_EXERCISES',
 ]
 
@@ -11,11 +11,11 @@ from .math import (
     MultiplicationExercise,
     SubtractionExercise,
 )
-from .math.enums import MathExercise
+from .math.enums import MathEnum
 
 MATH_EXERCISES = {
-    MathExercise.ADDING: AddingExercise,
-    MathExercise.SUBTRACTION: SubtractionExercise,
-    MathExercise.MULTIPLICATION: MultiplicationExercise,
-    MathExercise.DIVISION: DivisionExercise,
+    MathEnum.ADDING: AddingExercise,
+    MathEnum.SUBTRACTION: SubtractionExercise,
+    MathEnum.MULTIPLICATION: MultiplicationExercise,
+    MathEnum.DIVISION: DivisionExercise,
 }

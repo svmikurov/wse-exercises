@@ -3,7 +3,7 @@
 from wse_exercises.base.enums import ExerciseEnum
 
 
-class MathExercise(ExerciseEnum):
+class MathEnum(ExerciseEnum):
     """Enumeration of available exercise types."""
 
     ADDING = 'adding'
