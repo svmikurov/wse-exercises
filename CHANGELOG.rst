@@ -1,3 +1,34 @@
+0.4.2 (24-07-2025)
+==================
+
+- Added `NumberAnswer` model
+- Added `CheckResponse` model
+- Added `SimpleCalcAnswer` model for simple calculation math task answer
+- Added `SimpleCalcResult` model for answer checking result
+
+- Added `ttl` field to `Config` model
+- Added `time` field to `SimpleCalcConditions` model
+- Added `checked_at` field to `CheckResponse` model
+- Added `is_rewardable` field to `HandleAnswer` model
+- Added `is_rewardable` field to `TaskRequest` model
+- Updated `str` to `uuid.UUID` 'uid' field type in `CheckRequest`
+- Updated `str` to `uuid.UUID` 'uid' field type in `TaskResponse`
+
+- Renamed `MathExercise` enumeration to `MathEnum`
+- Renamed `Exercise` enumeration to `ExerciseEnum`
+- Renamed `HandleAnswer` model to `CheckRequest`
+- Renamed `SimpleCalcHandle` model to `SimpleCalcAnswer`
+
+- Added serialization and deserialization of the UUID type field to the `ConvertMixin` methods.
+- Added `ConversionError` the base exception for all conversion-related errors
+- Added error raising to `ConvertMixin` for instantiate methods
+
+Typing
+- Added `types.py` module with types
+- Added type vars import from root package
+- Added type vars: 'TaskT', 'TaskT_co', 'TaskT_contr', 'AnswerT', 'ConditionsT',
+  'ConfigT', 'ExerciseT', 'QuestionT',
+
 0.4.0 (08-07-2025)
 ==================
 
