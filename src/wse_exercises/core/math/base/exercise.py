@@ -7,20 +7,20 @@ from pydantic import ValidationError
 
 from ..enums import MathEnum
 from ..exceptions import OperandGeneratorError
-from ..task import SimpleCalcTask
+from ..task import CalcTask
 from .components import (
-    SimpleCalcAnswer,
-    SimpleCalcConditions,
-    SimpleCalcConfig,
-    SimpleCalcQuestion,
+    CalcAnswer,
+    CalcConditions,
+    CalcConfig,
+    CalcQuestion,
 )
 from .services import OperandGeneratorABC
-from .task_factory import SimpleCalcFactory
+from .task_factory import CalcFactory
 
 logger = logging.getLogger(__name__)
 
 
-class SimpleCalcExercise:
+class CalcExercise:
     """Defines a base logic of simple calculation exercise creation.
 
     Control exercise task creation with:
@@ -31,12 +31,12 @@ class SimpleCalcExercise:
     """
 
     exercise_name: ClassVar[MathEnum]
-    task_factory: ClassVar[Type[SimpleCalcFactory]]
+    task_factory: ClassVar[Type[CalcFactory]]
 
     def __init__(
         self,
         operand_generator: OperandGeneratorABC,
-        config: SimpleCalcConfig | dict[str, Any] | None = None,
+        config: CalcConfig | dict[str, Any] | None = None,
     ) -> None:
         """Construct the task creation."""
         # Initialize exercise config
@@ -44,22 +44,22 @@ class SimpleCalcExercise:
             # Automatic conversion of dictionaries
             # and other types into a model
             self._config = (
-                SimpleCalcConfig.parse_obj(config)
+                CalcConfig.parse_obj(config)
                 if config is not None
-                else SimpleCalcConfig()
+                else CalcConfig()
             )
         except ValidationError as e:
             logger.error(f'Invalid exercise config: {e.errors()}')
             logger.info('Using default configuration')
-            self._config = SimpleCalcConfig()
+            self._config = CalcConfig()
 
         # Set up operand generator
         self._operand_generator = operand_generator
 
     def create_task(
         self,
-        config: SimpleCalcConfig | dict[str, Any] | None = None,
-    ) -> SimpleCalcTask:
+        config: CalcConfig | dict[str, Any] | None = None,
+    ) -> CalcTask:
         """Create simple calculation task."""
         self._set_configuration(config)
         self._generate_operands()
@@ -71,12 +71,12 @@ class SimpleCalcExercise:
 
     def _set_configuration(
         self,
-        config: SimpleCalcConfig | dict[str, Any] | None,
+        config: CalcConfig | dict[str, Any] | None,
     ) -> None:
         """Update exercise configuration with validation."""
         if config is not None:
             try:
-                self._config = SimpleCalcConfig.parse_obj(config)
+                self._config = CalcConfig.parse_obj(config)
             except ValidationError as e:
                 logger.error(f'Invalid configuration update: {e.errors()}')
         # If config is None, keep existing configuration.
@@ -124,18 +124,18 @@ class SimpleCalcExercise:
             self._operand_1, self._operand_2
         )
 
-    def _create_task_dto(self) -> SimpleCalcTask:
+    def _create_task_dto(self) -> CalcTask:
         """Create simple math task Data Transfer Object."""
-        return SimpleCalcTask(
-            config=SimpleCalcConfig(
+        return CalcTask(
+            config=CalcConfig(
                 min_value=self._min_value,
                 max_value=self._max_value,
             ),
-            conditions=SimpleCalcConditions(
+            conditions=CalcConditions(
                 operand_1=self._operand_1,
                 operand_2=self._operand_2,
             ),
-            question=SimpleCalcQuestion(text=self._question),
-            answer=SimpleCalcAnswer(number=self._answer),
+            question=CalcQuestion(text=self._question),
+            answer=CalcAnswer(number=self._answer),
             exercise_name=self.exercise_name,
         )

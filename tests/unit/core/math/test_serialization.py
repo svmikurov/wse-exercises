@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 from typing import Any
 
-from wse_exercises.core.math.task import SimpleCalcTask
+from wse_exercises.core.math.task import CalcTask
 
 
 class TestDTOSerialization:
@@ -17,13 +17,13 @@ class TestDTOSerialization:
     ) -> None:
         """Test JSON serialization roundtrip."""
         # Create original task from fixture
-        task = SimpleCalcTask(**adding_task_data)
+        task = CalcTask(**adding_task_data)
 
         # Convert to JSON string
         json_str = task.to_json()
 
         # Parse JSON back to dictionary
-        loaded_data = SimpleCalcTask.from_json(json_str)
+        loaded_data = CalcTask.from_json(json_str)
 
         assert loaded_data.config.min_value == 1
         assert loaded_data.config.max_value == 9
@@ -48,7 +48,7 @@ class TestDTOSerialization:
         json_str = json.dumps(adding_task_data)
 
         # Create original task from JSON
-        task = SimpleCalcTask.from_json(json_str)
+        task = CalcTask.from_json(json_str)
 
         assert task.config.min_value == 1
         assert task.config.max_value == 9
@@ -70,13 +70,13 @@ class TestDTOSerialization:
     ) -> None:
         """Test dictionary conversion roundtrip."""
         # Create original task from fixture
-        task = SimpleCalcTask(**adding_task_data)
+        task = CalcTask(**adding_task_data)
 
         # Dict roundtrip
         dict_data = task.to_dict()
 
-        assert SimpleCalcTask(**dict_data) == task
+        assert CalcTask(**dict_data) == task
 
         # JSON roundtrip
         json_data = task.to_json()
-        assert SimpleCalcTask.from_json(json_data) == task
+        assert CalcTask.from_json(json_data) == task

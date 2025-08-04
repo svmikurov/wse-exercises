@@ -3,20 +3,20 @@
 from wse_exercises.base.task import Task
 
 from .base.components import (
-    SimpleCalcAnswer,
-    SimpleCalcConditions,
-    SimpleCalcConfig,
-    SimpleCalcQuestion,
+    CalcAnswer,
+    CalcConditions,
+    CalcConfig,
+    CalcQuestion,
 )
 from .enums import MathEnum
 
 
-class SimpleCalcTask(
+class CalcTask(
     Task[
-        SimpleCalcConfig,
-        SimpleCalcConditions,
-        SimpleCalcQuestion,
-        SimpleCalcAnswer,
+        CalcConfig,
+        CalcConditions,
+        CalcQuestion,
+        CalcAnswer,
         MathEnum,
     ]
 ):
@@ -30,8 +30,8 @@ class SimpleCalcTask(
     :param created: The data and time of task creation.
     """
 
-    config: SimpleCalcConfig
-    conditions: SimpleCalcConditions
-    question: SimpleCalcQuestion
-    answer: SimpleCalcAnswer
+    config: CalcConfig
+    conditions: CalcConditions
+    question: CalcQuestion
+    answer: CalcAnswer
     exercise_name: MathEnum

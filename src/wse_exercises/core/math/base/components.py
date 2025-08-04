@@ -15,7 +15,7 @@ MIN_VALUE = 1
 MAX_VALUE = 9
 
 
-class SimpleCalcConfig(Config):
+class CalcConfig(Config):
     """Simple calculation math task config model."""
 
     min_value: int = MIN_VALUE
@@ -34,7 +34,7 @@ class SimpleCalcConfig(Config):
         return value
 
 
-class SimpleCalcConditions(Conditions):
+class CalcConditions(Conditions):
     """Simple calculation math task conditions model."""
 
     operand_1: int
@@ -42,9 +42,9 @@ class SimpleCalcConditions(Conditions):
     time: int = Field(default=60, description='Time for task solution')
 
 
-class SimpleCalcQuestion(TextQuestion):
+class CalcQuestion(TextQuestion):
     """Simple calculation math task question model."""
 
 
-class SimpleCalcAnswer(NumberAnswer):
+class CalcAnswer(NumberAnswer):
     """Simple calculation math task answer model."""

@@ -2,7 +2,7 @@
 
 from typing import Any
 
-from wse_exercises.core.math.task import SimpleCalcTask
+from wse_exercises.core.math.task import CalcTask
 
 
 class TestPublicInterface:
@@ -10,25 +10,25 @@ class TestPublicInterface:
 
     def test_from_dict(
         self,
-        adding_task_dto: SimpleCalcTask,
+        adding_task_dto: CalcTask,
         adding_task_data: dict[str, Any],
     ) -> None:
         """Test the `from_dict()` method."""
-        task = SimpleCalcTask.from_dict(adding_task_data)
+        task = CalcTask.from_dict(adding_task_data)
         assert adding_task_dto == task
 
     def test_from_json(
         self,
-        adding_task_dto: SimpleCalcTask,
+        adding_task_dto: CalcTask,
         adding_task_json: str,
     ) -> None:
         """Test the `from_json()` method."""
-        task = SimpleCalcTask.from_json(adding_task_json)
+        task = CalcTask.from_json(adding_task_json)
         assert adding_task_dto == task
 
     def test_to_dict(
         self,
-        adding_task_dto: SimpleCalcTask,
+        adding_task_dto: CalcTask,
         adding_task_data: dict[str, Any],
     ) -> None:
         """Test the `to_dict()` method."""
@@ -37,7 +37,7 @@ class TestPublicInterface:
 
     def test_to_json(
         self,
-        adding_task_dto: SimpleCalcTask,
+        adding_task_dto: CalcTask,
         adding_task_json: str,
     ) -> None:
         """Test the `to_json()` method."""

@@ -6,19 +6,19 @@ __all__ = [
     'ExactOperandGenerator',
     'MultiplicationExercise',
     'RandomOperandGenerator',
-    'SimpleCalcAnswer',
-    'SimpleCalcConditions',
-    'SimpleCalcConfig',
-    'SimpleCalcQuestion',
+    'CalcAnswer',
+    'CalcConditions',
+    'CalcConfig',
+    'CalcQuestion',
     'SubtractionExercise',
-    'SimpleCalcTask',
+    'CalcTask',
 ]
 
 from .base.components import (
-    SimpleCalcAnswer,
-    SimpleCalcConditions,
-    SimpleCalcConfig,
-    SimpleCalcQuestion,
+    CalcAnswer,
+    CalcConditions,
+    CalcConfig,
+    CalcQuestion,
 )
 from .exercises import (
     AddingExercise,
@@ -31,5 +31,5 @@ from .services.operand_generator import (
     RandomOperandGenerator,
 )
 from .task import (
-    SimpleCalcTask,
+    CalcTask,
 )

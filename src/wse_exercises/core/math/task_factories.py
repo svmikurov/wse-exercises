@@ -1,9 +1,9 @@
 """Defines the calculation exercise components."""
 
-from .base.task_factory import SimpleCalcFactory
+from .base.task_factory import CalcFactory
 
 
-class AddingTaskFactory(SimpleCalcFactory):
+class AddingTaskFactory(CalcFactory):
     """Create simple adding task."""
 
     @classmethod
@@ -17,7 +17,7 @@ class AddingTaskFactory(SimpleCalcFactory):
         return op1 + op2
 
 
-class DivisionTaskFactory(SimpleCalcFactory):
+class DivisionTaskFactory(CalcFactory):
     """Create simple division task."""
 
     @classmethod
@@ -31,7 +31,7 @@ class DivisionTaskFactory(SimpleCalcFactory):
         return op1
 
 
-class MultiplicationTaskFactory(SimpleCalcFactory):
+class MultiplicationTaskFactory(CalcFactory):
     """Create simple multiplication task."""
 
     @classmethod
@@ -45,7 +45,7 @@ class MultiplicationTaskFactory(SimpleCalcFactory):
         return op1 * op2
 
 
-class SubtractionTaskFactory(SimpleCalcFactory):
+class SubtractionTaskFactory(CalcFactory):
     """Create simple subtraction task."""
 
     @classmethod

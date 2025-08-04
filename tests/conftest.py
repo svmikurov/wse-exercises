@@ -8,13 +8,13 @@ from typing import Any
 import pytest
 
 from wse_exercises.core.math.base.components import (
-    SimpleCalcAnswer,
-    SimpleCalcConditions,
-    SimpleCalcConfig,
-    SimpleCalcQuestion,
+    CalcAnswer,
+    CalcConditions,
+    CalcConfig,
+    CalcQuestion,
 )
 from wse_exercises.core.math.enums import MathEnum
-from wse_exercises.core.math.task import SimpleCalcTask
+from wse_exercises.core.math.task import CalcTask
 
 
 @pytest.fixture
@@ -30,13 +30,13 @@ def uid() -> uuid.UUID:
 
 
 @pytest.fixture
-def adding_task_dto(created: datetime) -> SimpleCalcTask:
+def adding_task_dto(created: datetime) -> CalcTask:
     """Fixture providing simple math task DTO."""
-    return SimpleCalcTask(
-        config=SimpleCalcConfig(min_value=1, max_value=9, ttl=3600),
-        conditions=SimpleCalcConditions(operand_1=2, operand_2=3),
-        question=SimpleCalcQuestion(text='2 + 3'),
-        answer=SimpleCalcAnswer(number=5),
+    return CalcTask(
+        config=CalcConfig(min_value=1, max_value=9, ttl=3600),
+        conditions=CalcConditions(operand_1=2, operand_2=3),
+        question=CalcQuestion(text='2 + 3'),
+        answer=CalcAnswer(number=5),
         exercise_name=MathEnum.ADDING,
         created_at=created,
     )
