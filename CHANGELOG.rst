@@ -1,3 +1,13 @@
+0.4.3
+==================
+
+- Renamed SimpleCalc... to Calc... components, for example `SimpleCalcConfig`
+  renamed to `CalcConfig`
+- Remove rest components
+- Renamed operand generator service abstract base class `OperandGenerator`
+  to `OperandGeneratorABC`
+
+
 0.4.2 (24-07-2025)
 ==================
 
