@@ -2,14 +2,14 @@
 
 from random import randint
 
-from wse_exercises.core.math.base.services import OperandGenerator
+from wse_exercises.core.math.base.services import OperandGeneratorABC
 from wse_exercises.core.math.exceptions import OperandGeneratorError
 from wse_exercises.utils.logger import setup_logging
 
 logger = setup_logging(__name__)
 
 
-class RandomOperandGenerator(OperandGenerator):
+class RandomOperandGenerator(OperandGeneratorABC):
     """Generates random operands in range.
 
     Example:
@@ -33,7 +33,7 @@ class RandomOperandGenerator(OperandGenerator):
         return randint(self._min_value, self._max_value)
 
 
-class ExactOperandGenerator(OperandGenerator):
+class ExactOperandGenerator(OperandGeneratorABC):
     """Return value by order.
 
     Example:

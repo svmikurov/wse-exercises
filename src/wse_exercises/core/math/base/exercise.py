@@ -14,7 +14,7 @@ from .components import (
     SimpleCalcConfig,
     SimpleCalcQuestion,
 )
-from .services import OperandGenerator
+from .services import OperandGeneratorABC
 from .task_factory import SimpleCalcFactory
 
 logger = logging.getLogger(__name__)
@@ -35,7 +35,7 @@ class SimpleCalcExercise:
 
     def __init__(
         self,
-        operand_generator: OperandGenerator,
+        operand_generator: OperandGeneratorABC,
         config: SimpleCalcConfig | dict[str, Any] | None = None,
     ) -> None:
         """Construct the task creation."""

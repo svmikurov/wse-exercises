@@ -3,7 +3,7 @@
 from abc import ABC, abstractmethod
 
 
-class OperandGenerator(ABC):
+class OperandGeneratorABC(ABC):
     """Protocol for generator of integer operands."""
 
     @abstractmethod
