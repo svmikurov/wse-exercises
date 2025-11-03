@@ -1,5 +1,6 @@
 """Defines tests for base class for tasks."""
 
+import json
 from typing import Any
 
 from wse_exercises.core.math.task import CalcTask
@@ -41,4 +42,22 @@ class TestPublicInterface:
         adding_task_json: str,
     ) -> None:
         """Test the `to_json()` method."""
-        assert adding_task_json == adding_task_dto.to_json()
+        expected_data = json.loads(adding_task_json)
+        actual_data = json.loads(adding_task_dto.to_json())
+
+        expected_data = self._normalize_datetime_format(expected_data)
+        actual_data = self._normalize_datetime_format(actual_data)
+
+        assert expected_data == actual_data
+
+    def _normalize_datetime_format(
+        self, data: dict[str, object]
+    ) -> dict[str, object]:
+        """Normalize datetime format for comparison."""
+        if 'created_at' in data and isinstance(data['created_at'], str):
+            dt_str = data['created_at']
+            if dt_str.endswith('Z'):
+                data['created_at'] = dt_str[:-1] + '+00:00'
+            elif dt_str.endswith('+00:00'):
+                pass
+        return data

@@ -44,7 +44,7 @@ class CalcExercise:
             # Automatic conversion of dictionaries
             # and other types into a model
             self._config = (
-                CalcConfig.parse_obj(config)
+                CalcConfig.model_validate(config)
                 if config is not None
                 else CalcConfig()
             )
@@ -76,7 +76,7 @@ class CalcExercise:
         """Update exercise configuration with validation."""
         if config is not None:
             try:
-                self._config = CalcConfig.parse_obj(config)
+                self._config = CalcConfig.model_validate(config)
             except ValidationError as e:
                 logger.error(f'Invalid configuration update: {e.errors()}')
         # If config is None, keep existing configuration.

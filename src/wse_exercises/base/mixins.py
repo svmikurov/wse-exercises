@@ -4,7 +4,7 @@ import uuid
 from datetime import datetime
 from typing import Any, Type, TypeVar
 
-from pydantic import BaseModel, ValidationError, validator
+from pydantic import BaseModel, ValidationError, field_validator
 
 from .exceptions import ConversionError
 
@@ -22,7 +22,7 @@ class ConvertMixin(BaseModel):
                 f'Expected dict, got {type(data).__name__}',
             )
         try:
-            return cls.parse_obj(data)
+            return cls.model_validate(data)
         except ValidationError as e:
             raise ConversionError(
                 'Data validate filed',
@@ -37,7 +37,7 @@ class ConvertMixin(BaseModel):
                 f'Expected str/bytes, got {type(data).__name__}',
             )
         try:
-            return cls.parse_raw(data)
+            return cls.model_validate_json(data)
         except ValidationError as e:
             raise ConversionError(
                 'JSON validation failed',
@@ -62,14 +62,14 @@ class ConvertMixin(BaseModel):
 
             return dict_data
 
-        return convert_datetime(self.dict())
+        return convert_datetime(self.model_dump())
 
     def to_json(self) -> str:
         """Serialize the instance to a JSON string."""
-        return self.json()
+        return self.model_dump_json()
 
     @classmethod
-    @validator('*', pre=True)
+    @field_validator('*', mode='before')
     def _validate_uuid_fields(cls, value: object) -> object:
         if isinstance(value, str):
             try:

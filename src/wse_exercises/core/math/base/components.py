@@ -1,8 +1,6 @@
 """Defines mathematical task component models."""
 
-from typing import Any
-
-from pydantic import Field, validator
+from pydantic import Field, ValidationInfo, field_validator
 
 from wse_exercises.base.components import (
     Conditions,
@@ -22,14 +20,15 @@ class CalcConfig(Config):
     max_value: int = MAX_VALUE
 
     @classmethod
-    @validator('max_value')
+    @field_validator('max_value')
     def check_min_less_than_max(
         cls,
-        value: str,
-        values: dict[str, Any],
-    ) -> str:
+        value: int,
+        info: ValidationInfo,
+    ) -> int:
         """Check that the minimum value is greater than the maximum."""
-        if 'min_value' in values and value <= values['min_value']:
+        min_value = info.data.get('min_value') if info.data else None
+        if min_value is not None and value <= min_value:
             raise ValueError('max_value must be greater than min_value')
         return value
 

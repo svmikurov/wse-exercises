@@ -20,3 +20,15 @@ task = exercise.create_task()
 print(f'{task.question.text = }')
 print(f'{task.answer.text = }')
 ```
+
+### Install development mode
+
+```
+curl -SL https://install.python-poetry.org | python3 -
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+## Dependencies
+
+python = "^3.10"
+pydantic = ">=2.12.3,<3.0.0"
