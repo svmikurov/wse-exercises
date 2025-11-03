@@ -6,7 +6,7 @@ from typing import Any, Type, TypeVar
 
 from pydantic import BaseModel, ValidationError, validator
 
-from .exeptions import ConversionError
+from .exceptions import ConversionError
 
 T = TypeVar('T', bound='ConvertMixin')
 

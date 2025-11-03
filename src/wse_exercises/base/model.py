@@ -5,5 +5,5 @@ from pydantic import BaseModel
 from .mixins import ConvertMixin
 
 
-class BaseShema(ConvertMixin, BaseModel):
+class BaseSchema(ConvertMixin, BaseModel):
     """Base model with custom conversion between dict/json."""

@@ -2,12 +2,12 @@
 
 from pydantic import Field
 
-from .model import BaseShema
+from .model import BaseSchema
 
 DEFAULT_TTL = 3600
 
 
-class Config(BaseShema):
+class Config(BaseSchema):
     """Base exercise config model to create task."""
 
     ttl: int = Field(
@@ -16,15 +16,15 @@ class Config(BaseShema):
     )
 
 
-class Conditions(BaseShema):
+class Conditions(BaseSchema):
     """Base exercise conditions model to create task."""
 
 
-class Question(BaseShema):
+class Question(BaseSchema):
     """Base task question model."""
 
 
-class Answer(BaseShema):
+class Answer(BaseSchema):
     """Base task answer model."""
 
 

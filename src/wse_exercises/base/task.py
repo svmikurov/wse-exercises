@@ -13,11 +13,11 @@ from wse_exercises import (
     QuestionT,
 )
 
-from .model import BaseShema
+from .model import BaseSchema
 
 
 class Task(
-    BaseShema,
+    BaseSchema,
     Generic[ConfigT, ConditionsT, QuestionT, AnswerT, ExerciseT],
 ):
     """Base class for DTO exercise task."""
