@@ -20,3 +20,8 @@ task = exercise.create_task()
 print(f'{task.question.text = }')
 print(f'{task.answer.text = }')
 ```
+
+### Dependencies
+
+python 3.13
+pydantic 1.10.22
